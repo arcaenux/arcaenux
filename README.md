@@ -1,4 +1,4 @@
-# `arcaenux` — Developer Profile
+# Developer Profile
 
 <div align="center">
 
