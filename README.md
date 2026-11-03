@@ -1,77 +1,62 @@
-<img src="./assets/signal.svg" width="100%" alt="ARCAENUX — a year in commits, rendered as a generative bloom" />
+<img src="./assets/header.svg" width="100%" alt="Joseph Boafo Afful — software engineer, computer science at KNUST" />
 
-## 00 · Hey, I'm Joseph.
+## About
 
-**arcaenux** online. Computer science student at **KNUST, Ghana**. I build software to understand how it works — then rebuild it because I understood it wrong the first time.
+I'm **Joseph Boafo Afful** (`arcaenux`), a computer science student at **KNUST** in Kumasi, Ghana. I work on **backend systems**, **developer tooling**, and **applied AI**, with a focus on software that is clear, reliable, and useful.
 
-I care about the layer underneath: how the request travels, where the algorithm bends, why the abstraction leaks. My work sits where **software engineering**, **algorithms**, and **applied AI** meet, with a bias toward **backend systems** and **developer tooling**.
+I'm currently open to **internships**, **collaborations**, and **open-source work**. The best way to reach me is through an issue on this repository.
 
-**Currently:** building something with too many moving parts · learning distributed systems, applied AI, and the fine art of naming things · open to internships, collaborations, and interesting problems.
-
-> Make it work. Make it clear. Make it fast — in that order.
-
-<img src="./assets/divider.svg" width="100%" alt="" />
-
-## 01 · The short version
+## At a glance
 
 | | |
 |:---|:---|
-| **What I do** | Backend systems · developer tooling · applied AI |
-| **How I work** | Understand it → build it → break it → explain it |
-| **Coordinates** | Kumasi, Ghana · 6.6885° N, 1.6244° W |
-| **Open to** | Internships · collaborations · interesting problems |
+| **Based in** | Kumasi, Ghana |
+| **Education** | Computer Science, KNUST |
+| **Focus** | Backend systems · Applied AI · Developer tooling |
+| **Open to** | Internships · Collaborations · Open source |
 
-<img src="./assets/divider.svg" width="100%" alt="" />
+---
 
-## 02 · Selected work
+## Selected projects
 
-### 001 · [mindstep](https://github.com/arcaenux/mindstep)
-**Mental-health literacy for Ghana.** 24 topic cards across nine themes, voice and text, practice conversations, and a checked support directory. No accounts. No paywall. Built to be useful on a bad day, not to collect data.
+### [mindstep](https://github.com/arcaenux/mindstep)
+Mental-health literacy platform for Ghana. Includes 24 topic cards across nine themes, voice and text input, practice conversations, and a vetted support directory. Designed to work without accounts, paywalls, or personal data collection.
 
 `TypeScript` · `React` · `Vite`
 
-### 002 · [course-rundown](https://github.com/arcaenux/course-rundown)
-**Interactive study rooms.** Formula calculators, exam banks, timed simulators, and a C++ memory/pointer visualizer — built around real course material instead of generic flashcards.
+### [course-rundown](https://github.com/arcaenux/course-rundown)
+Interactive study environment for university courses. Includes formula calculators, exam banks, timed simulators, and a C++ memory and pointer visualizer built around actual course material.
 
 `TypeScript` · `React` · `Education`
 
-### 003 · [SaveDat](https://github.com/arcaenux/SaveDat)
-**A Java CLI that finds the files you'd lose if one drive failed.** Matches copies by content, not filename. Read-only by design, because a safety tool should never be the reason you lose something.
+### [SaveDat](https://github.com/arcaenux/SaveDat)
+A Java CLI for locating files that would be lost if a single drive failed. Matches copies by content rather than filename and operates read-only so it cannot damage source data.
 
 `Java` · `CLI` · `Systems`
 
-### 004 · [RepoClue](https://github.com/arcaenux/RepoClue)
-**Discover, evaluate, and organize public GitHub repositories from the terminal.** A Python CLI for the part of research that happens before you clone.
+### [RepoClue](https://github.com/arcaenux/RepoClue)
+A Python CLI for discovering, evaluating, and organizing public GitHub repositories from the terminal. Covers the research stage before cloning.
 
 `Python` · `CLI` · `Developer tooling`
 
-<sub>Also in the archive: [mern-chat](https://github.com/arcaenux/mern-chat) · [qr_scanner](https://github.com/arcaenux/qr_scanner) · [Axellemd_projects](https://github.com/arcaenux/Axellemd_projects)</sub>
+<sub>Additional repositories: [mern-chat](https://github.com/arcaenux/mern-chat) · [qr_scanner](https://github.com/arcaenux/qr_scanner) · [Axellemd_projects](https://github.com/arcaenux/Axellemd_projects)</sub>
 
-<img src="./assets/divider.svg" width="100%" alt="" />
+---
 
-## 03 · The stack
+## Technical stack
 
-<img src="./assets/layers.svg" width="100%" alt="The stack, layer by layer" />
-
-I don't collect tools. I use them to answer questions.
-
-| Layer | Components |
+| Layer | Technologies |
 |:---|:---|
-| **L7 · Application** | React · Next.js · Django · Vite |
-| **L6 · Languages** | TypeScript · JavaScript · Python · Java · C++ |
-| **L5 · Data** | MongoDB · PostgreSQL · SQLite |
-| **L4 · Runtime** | Node.js · Express · Vercel |
-| **L3 · System** | Linux · Git · GitHub · VS Code |
+| **Application** | React · Next.js · Django · Vite |
+| **Languages** | TypeScript · JavaScript · Python · Java · C++ |
+| **Data** | MongoDB · PostgreSQL · SQLite |
+| **Runtime & tooling** | Node.js · Express · Vercel · Git · Linux |
 
-<sub>Currently deepening: distributed systems · applied AI · developer tooling.</sub>
+---
 
-<img src="./assets/divider.svg" width="100%" alt="" />
+## GitHub activity
 
-## 04 · The signal
-
-<img src="./assets/pulse.svg" width="100%" alt="Daily contribution signal" />
-
-<img src="./assets/spectrum.svg" width="100%" alt="Language spectrum by bytes" />
+<img src="./assets/spectrum.svg" width="100%" alt="Language distribution by bytes across public repositories" />
 
 <div align="center">
 <table>
@@ -84,48 +69,18 @@ I don't collect tools. I use them to answer questions.
 
 <img src="https://github-activity-graph.vercel.app/graph?username=arcaenux&bg_color=070709&color=FF2438&line=FF2438&point=F4F0E8&area=true&area_color=FF2438&hide_border=true&custom_title=CONTRIBUTION%20ACTIVITY" width="100%" alt="Contribution activity graph" />
 
-<img src="./assets/divider.svg" width="100%" alt="" />
+---
 
-## 05 · The human part
+## Contact
 
-A few things that are true:
-
-- I name things carefully. Future me is a stakeholder.
-- I debug by asking, "what did I assume?"
-- I think the best code is the code you don't have to explain twice.
-- I like systems that fail loudly and recover quietly.
-- I take walks when I'm stuck. It works more often than it should.
-- Away from the keyboard: good music, long conversations, and explaining that computer science is not the same as fixing printers.
-
-And one thing that isn't:
-
-- I have never written a bug. I have only written *unexpected features*.
-
-<img src="./assets/divider.svg" width="100%" alt="" />
-
-## 06 · Let's build something
-
-The fastest way to reach me is an issue on this repo. Bring a problem, a half-formed idea, or a bug you've been staring at for an hour. All three are welcome.
+I'm most responsive through GitHub. Open an issue for collaborations, project questions, or anything worth building.
 
 <div align="center">
 
 <a href="https://github.com/arcaenux"><img src="https://img.shields.io/badge/GITHUB-ARCAENUX-070709?style=for-the-badge&logo=github&logoColor=F4F0E8&labelColor=FF2438" alt="GitHub" /></a>
 <a href="https://github.com/arcaenux?tab=repositories"><img src="https://img.shields.io/badge/REPOSITORIES-EXPLORE-070709?style=for-the-badge&logo=github&logoColor=F4F0E8&labelColor=FF2438" alt="Repositories" /></a>
-<a href="https://github.com/arcaenux/arcaenux/issues"><img src="https://img.shields.io/badge/SAY_HELLO-OPEN_AN_ISSUE-070709?style=for-the-badge&logo=github&logoColor=F4F0E8&labelColor=FF2438" alt="Open an issue" /></a>
+<a href="https://github.com/arcaenux/arcaenux/issues"><img src="https://img.shields.io/badge/CONTACT-OPEN_AN_ISSUE-070709?style=for-the-badge&logo=github&logoColor=F4F0E8&labelColor=FF2438" alt="Open an issue" /></a>
 
 </div>
 
-<details>
-<summary><code>// EOF</code></summary>
-
-If you're reading this, you're the kind of person I want to build with. Open an issue. Tell me what you're working on.
-
-</details>
-
-<img src="./assets/footer.svg" width="100%" alt="The signal continues." />
-
-<div align="center">
-<sub>Joseph Boafo Afful · Ghana · Built with curiosity and a little bit of obsession.</sub>
-
-<sub>The hero is a phyllotaxis of 367 real days of commits — each seed is a day, brightness is contribution count. Generated by <a href="./build_assets.py"><code>build_assets.py</code></a>; refreshed by <a href="./refresh_data.py"><code>refresh_data.py</code></a>.</sub>
-</div>
+<sub>Profile assets are generated from real GitHub activity by <a href="./build_assets.py"><code>build_assets.py</code></a> and refreshed by <a href="./refresh_data.py"><code>refresh_data.py</code></a>.</sub>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh the ARCAENUX / SIGNAL data snapshots, then rebuild every SVG.
+"""Refresh the ARCAENUX data snapshots, then rebuild every SVG.
 
 Requires the GitHub CLI (`gh`) to be authenticated as the profile owner.
 
@@ -9,10 +9,10 @@ Run:
 This updates:
     data/contributions.json   the last year of contribution counts
     data/repos.json           public repositories + aggregated language bytes
-    assets/*.svg              signal, pulse, spectrum, layers, divider, footer
+    assets/*.svg              header, pulse, spectrum, layers, divider, footer
 
 Then commit the changes:
-    git add -A && git commit -m "Refresh signal" && git push
+    git add -A && git commit -m "Refresh profile assets" && git push
 """
 import collections
 import json

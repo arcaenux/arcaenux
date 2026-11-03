@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""ARCAENUX / SIGNAL — generative profile assets built from real GitHub activity.
+"""ARCAENUX — professional profile assets built from real GitHub activity.
 
 Reads:
   data/contributions.json  367 days of contribution counts
   data/repos.json          repo + language metadata
 
 Writes:
-  assets/signal.svg        hero: a year in bloom (phyllotaxis of daily commits)
+  assets/header.svg        hero: professional wordmark + contribution heatmap
   assets/pulse.svg         daily contribution seismograph
   assets/spectrum.svg      language spectrum by bytes
   assets/layers.svg        the stack, layer by layer
-  assets/divider.svg       signal rule
+  assets/divider.svg       section rule
   assets/footer.svg        closing plate
 
 Run:  python build_assets.py
@@ -38,6 +38,7 @@ LINE  = "#222228"
 
 MONO  = "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 SERIF = "Georgia, 'Times New Roman', serif"
+SANS  = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 
 NAME = "ARCAENUX"
 TAGLINE = "A YEAR IN COMMITS"
@@ -88,174 +89,82 @@ def save(name, body):
     print(f"wrote {name:16s} {len(svg):>7,} bytes")
 
 
-# ---------------------------------------------------------------- hero
-def signal():
-    W, H = 900, 600
-    cx, cy, R = 300, 300, 238
+# ---------------------------------------------------------------- header
+def header():
+    W, H = 1200, 340
     p = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
         f'width="{W}" height="{H}" role="img" '
-        f'aria-label="{NAME} — {TAGLINE}: a generative bloom of {N} days and {TOTAL} contributions">'
+        f'aria-label="Joseph Boafo Afful — software engineer, computer science at KNUST">'
     ]
     p.append(
-        f'<defs>'
-        f'<radialGradient id="glow" cx="33%" cy="50%" r="58%">'
-        f'<stop offset="0" stop-color="{RED}" stop-opacity=".17"/>'
-        f'<stop offset=".55" stop-color="{RED}" stop-opacity=".04"/>'
-        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
-        f'<radialGradient id="vig" cx="50%" cy="50%" r="72%">'
-        f'<stop offset=".55" stop-color="#000" stop-opacity="0"/>'
-        f'<stop offset="1" stop-color="#000" stop-opacity=".62"/></radialGradient>'
-        f'<radialGradient id="coreglow" cx="50%" cy="50%" r="50%">'
-        f'<stop offset="0" stop-color="{HOT}" stop-opacity=".9"/>'
-        f'<stop offset=".4" stop-color="{RED}" stop-opacity=".5"/>'
-        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
-        f'</defs>'
+        f'<defs><linearGradient id="edge" x1="0" x2="1">'
+        f'<stop offset="0" stop-color="{RED}" stop-opacity="0"/>'
+        f'<stop offset=".5" stop-color="{RED}" stop-opacity=".85"/>'
+        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></linearGradient></defs>'
     )
     p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
 
     grid = []
-    for x in range(0, W + 1, 36):
+    for x in range(0, W + 1, 40):
         grid.append(f'<line x1="{x}" y1="0" x2="{x}" y2="{H}"/>')
-    for y in range(0, H + 1, 36):
+    for y in range(0, H + 1, 40):
         grid.append(f'<line x1="0" y1="{y}" x2="{W}" y2="{y}"/>')
-    p.append(f'<g stroke="#FFFFFF" stroke-opacity=".022" stroke-width="1">{"".join(grid)}</g>')
-    p.append(f'<rect width="{W}" height="{H}" fill="url(#glow)"/>')
+    p.append(f'<g stroke="#FFFFFF" stroke-opacity=".018" stroke-width="1">{"".join(grid)}</g>')
 
-    for d in (
-        "M24 40 V24 H40",
-        "M876 24 V40 M876 24 H860",
-        "M24 560 V576 H40",
-        "M876 576 V560 M876 576 H860",
-    ):
-        p.append(f'<path d="{d}" fill="none" stroke="{FAINT}" stroke-width="1"/>')
+    p.append(f'<circle cx="54" cy="78" r="4" fill="{RED}"/>')
+    p.append(txt(72, 82, "ARCAENUX  /  SOFTWARE ENGINEER", 10, RED, "700", "3"))
+    p.append(txt(72, 152, "Joseph Boafo Afful", 50, BONE, "700", "-1", "start", SANS))
+    p.append(txt(72, 190, "Computer Science @ KNUST  ·  Kumasi, Ghana", 15, ASH, "400", "0", "start", SANS))
 
-    p.append(txt(30, 30, f"{NAME} / SIGNAL", 9, ASH, "700", "3"))
-    p.append(txt(30, 45, f"ISSUE 001  ·  {START[:4]}—{END[:4]}", 8, DIM, "400", "2"))
+    chips = ["Backend Systems", "Applied AI", "Developer Tooling"]
+    x = 72
+    for chip in chips:
+        width = len(chip) * 6.6 + 28
+        p.append(f'<rect x="{x:.1f}" y="218" width="{width:.1f}" height="30" rx="15" fill="{INK}" stroke="{LINE}"/>')
+        p.append(txt(x + width / 2, 238, chip, 11, BONE, "500", "0.5", "middle", SANS))
+        x += width + 10
 
-    bloom = [
-        f'<g><animateTransform attributeName="transform" type="rotate" '
-        f'from="0 {cx} {cy}" to="360 {cx} {cy}" dur="180s" repeatCount="indefinite"/>'
-    ]
+    p.append(f'<circle cx="78" cy="300" r="3" fill="{RED}"/>')
+    p.append(txt(90, 304, "OPEN TO INTERNSHIPS  ·  COLLABORATIONS  ·  OPEN SOURCE", 9.5, ASH, "400", "1.5"))
 
-    seen_months = set()
+    p.append(f'<line x1="690" y1="56" x2="690" y2="284" stroke="{LINE}" stroke-width="1"/>')
+    first = datetime.date.fromisoformat(DAYS[0]["date"])
+    offset = first.weekday()
+    cell, gap = 5, 2
+    pitch = cell + gap
+    cols = (len(DAYS) - 1 + offset) // 7 + 1
+    grid_w = cols * pitch - gap
+    grid_x = 1128 - grid_w
+    grid_top = 126
+
+    p.append(txt(grid_x, 86, "CONTRIBUTION ACTIVITY", 10, RED, "700", "2.5"))
+    p.append(txt(grid_x, 104, "LAST 12 MONTHS", 8.5, DIM, "400", "2"))
+
     for i, day in enumerate(DAYS):
-        key = day["date"][:7]
-        if key in seen_months:
-            continue
-        seen_months.add(key)
-        rr = 16 + R * math.sqrt(i / (N - 1))
-        bloom.append(
-            f'<circle cx="{cx}" cy="{cy}" r="{rr:.1f}" fill="none" '
-            f'stroke="#FFFFFF" stroke-opacity=".035" stroke-width=".8"/>'
+        col = (i + offset) // 7
+        row = (i + offset) % 7
+        fill, opacity = color_for(day["count"])
+        if day["count"] == 0:
+            fill, opacity = "#141418", 0.9
+        p.append(
+            f'<rect x="{grid_x + col * pitch}" y="{grid_top + row * pitch}" '
+            f'width="{cell}" height="{cell}" rx="1" fill="{fill}" opacity="{opacity}"/>'
         )
 
-    for arm in range(3):
-        pts = []
-        for j in range(151):
-            angle = (j / 150) * 4 * math.pi + arm * 2 * math.pi / 3
-            rr = 16 + R * (j / 150)
-            pts.append(f"{cx + rr * math.cos(angle):.1f},{cy + rr * math.sin(angle):.1f}")
-        bloom.append(
-            f'<polyline points="{" ".join(pts)}" fill="none" stroke="{RED}" '
-            f'stroke-opacity=".045" stroke-width="1"/>'
-        )
+    p.append(txt(grid_x, 214, f"{TOTAL}", 24, BONE, "700", "-.5", "start", SANS))
+    p.append(txt(grid_x, 232, "CONTRIBUTIONS", 8.5, ASH, "400", "1.5"))
+    p.append(txt(grid_x + 120, 214, f"{N}", 24, BONE, "700", "-.5", "start", SANS))
+    p.append(txt(grid_x + 120, 232, "ACTIVE DAYS", 8.5, ASH, "400", "1.5"))
+    p.append(txt(grid_x + 240, 214, f"{PEAK}", 24, BONE, "700", "-.5", "start", SANS))
+    p.append(txt(grid_x + 240, 232, "PEAK / DAY", 8.5, ASH, "400", "1.5"))
 
-    top_days = set(sorted(range(N), key=lambda i: COUNTS[i], reverse=True)[:8])
-    for i, day in enumerate(DAYS):
-        count = day["count"]
-        t = i / (N - 1)
-        angle = i * math.radians(137.507764) - math.pi / 2
-        rr = 16 + R * math.sqrt(t)
-        x = cx + rr * math.cos(angle)
-        y = cy + rr * math.sin(angle)
-        size = 1.2 + min(count, 20) * 0.22
-        fill, opacity = color_for(count)
-        if count >= 5:
-            bloom.append(
-                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{size * 2.6:.1f}" '
-                f'fill="{RED}" opacity="{0.05 + min(count, 20) / 20 * 0.09:.2f}"/>'
-            )
-        bloom.append(
-            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{size:.1f}" fill="{fill}" opacity="{opacity}"/>'
-        )
-        if i in top_days:
-            bloom.append(
-                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{size + 5:.1f}" fill="none" '
-                f'stroke="{HOT}" stroke-opacity=".35" stroke-width=".8">'
-                f'<animate attributeName="r" values="{size + 4:.1f};{size + 11:.1f}" '
-                f'dur="2.8s" repeatCount="indefinite"/>'
-                f'<animate attributeName="stroke-opacity" values=".45;0" '
-                f'dur="2.8s" repeatCount="indefinite"/></circle>'
-            )
+    p.append(txt(1128, 82, "PROFILE / 2026", 9, DIM, "400", "2", "end"))
+    p.append(txt(1128, 304, "SOURCE  ·  GITHUB CONTRIBUTIONS API", 8, DIM, "400", "1.5", "end"))
 
-    bloom.append(
-        f'<circle cx="{cx}" cy="{cy}" r="252" fill="none" stroke="{RED}" '
-        f'stroke-opacity=".16" stroke-width="1" stroke-dasharray="1 7"/>'
-    )
-    bloom.append(
-        f'<circle cx="{cx}" cy="{cy}" r="260" fill="none" stroke="{RED}" '
-        f'stroke-opacity=".35" stroke-width="1.6" stroke-dasharray="40 1230">'
-        f'<animateTransform attributeName="transform" type="rotate" '
-        f'from="0 {cx} {cy}" to="360 {cx} {cy}" dur="40s" repeatCount="indefinite"/>'
-        f'</circle>'
-    )
-    for k in range(24):
-        angle = k * math.pi / 12
-        is_long = k % 2 == 0
-        r1, r2 = 256, (264 if is_long else 261)
-        bloom.append(
-            f'<line x1="{cx + r1 * math.cos(angle):.1f}" y1="{cy + r1 * math.sin(angle):.1f}" '
-            f'x2="{cx + r2 * math.cos(angle):.1f}" y2="{cy + r2 * math.sin(angle):.1f}" '
-            f'stroke="{ASH}" stroke-opacity="{0.55 if is_long else 0.28}" stroke-width="1"/>'
-        )
-    bloom.append("</g>")
-    p.extend(bloom)
-
-    p.append(f'<rect width="{W}" height="{H}" fill="url(#vig)" pointer-events="none"/>')
-
-    p.append(
-        f'<circle cx="{cx}" cy="{cy}" r="30" fill="url(#coreglow)" opacity=".65">'
-        f'<animate attributeName="opacity" values=".45;.8;.45" dur="3.6s" repeatCount="indefinite"/>'
-        f'</circle>'
-    )
-    p.append(
-        f'<circle cx="{cx}" cy="{cy}" r="4" fill="{HOT}">'
-        f'<animate attributeName="r" values="3.5;6;3.5" dur="3.6s" repeatCount="indefinite"/>'
-        f'</circle>'
-    )
-
-    p.append(f'<line x1="570" y1="80" x2="570" y2="520" stroke="{LINE}" stroke-width="1"/>')
-    for yy in range(80, 521, 40):
-        p.append(f'<line x1="570" y1="{yy}" x2="576" y2="{yy}" stroke="{FAINT}" stroke-width="1"/>')
-
-    x = 602
-    p.append(txt(x, 112, "SIGNAL / 001", 10, RED, "700", "3"))
-    p.append(txt(x, 166, NAME, 48, BONE, "800", "1"))
-    p.append(f'<line x1="{x}" y1="186" x2="870" y2="186" stroke="{RED}" stroke-width="1"/>')
-    p.append(txt(x, 212, TAGLINE, 11, ASH, "400", "4"))
-    p.append(txt(x, 320, str(TOTAL), 104, RED, "800", "-2"))
-    p.append(txt(x, 348, "CONTRIBUTIONS", 10, ASH, "400", "3"))
-    p.append(txt(x, 380, f"{N} DAYS   ·   PEAK {PEAK}   ·   {START[:4]}—{END[:4]}", 9.5, ASH, "400", ".5"))
-    p.append(f'<line x1="{x}" y1="404" x2="870" y2="404" stroke="{LINE}" stroke-width="1"/>')
-    p.append(txt(x, 434, "JOSEPH BOAFO AFFUL", 11, BONE, "700", "2"))
-    p.append(txt(x, 454, "COMPUTER SCIENCE · KNUST", 9.5, ASH, "400", "1"))
-    p.append(txt(x, 472, "GHANA · 6.6885° N, 1.6244° W", 9.5, ASH, "400", ".5"))
-    p.append(txt(x, 500, "GENERATED FROM REAL ACTIVITY", 8, DIM, "400", "1.5"))
-    p.append(txt(x, 514, f"LAST SYNC {datetime.date.today().isoformat()}", 8, DIM, "400", "1.5"))
-
-    p.append(
-        f'<circle cx="{x + 4}" cy="548" r="3.5" fill="{RED}">'
-        f'<animate attributeName="opacity" values="1;.15;1" dur="1.8s" repeatCount="indefinite"/>'
-        f'</circle>'
-    )
-    p.append(txt(x + 16, 552, "LIVE SIGNAL", 9, RED, "700", "2.5"))
-
-    p.append(txt(30, 560, "FIG. 01 — A YEAR IN BLOOM", 9, ASH, "700", "2"))
-    p.append(txt(30, 575, "EACH SEED IS A DAY. BRIGHTNESS IS CONTRIBUTIONS.", 8, DIM, "400", "1.5"))
-
+    p.append(f'<rect x="0" y="{H - 1}" width="{W}" height="1" fill="url(#edge)"/>')
     p.append("</svg>")
-    save("signal.svg", "".join(p))
+    save("header.svg", "".join(p))
 
 
 # ---------------------------------------------------------------- pulse
@@ -514,7 +423,7 @@ def footer():
 
 
 if __name__ == "__main__":
-    signal()
+    header()
     pulse()
     spectrum()
     layers()
