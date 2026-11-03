@@ -1,51 +1,29 @@
-<img src="./assets/signal.svg" width="100%" alt="ARCAENUX — a year in commits, rendered as a generative bloom of 367 days" />
+<img src="./assets/signal.svg" width="100%" alt="ARCAENUX — a year in commits, rendered as a generative bloom" />
 
-## 00 — SIGNAL
+## 00 · Hey, I'm Joseph.
 
-I build systems to understand them. Not the demo — the layer underneath.
+**arcaenux** online. Computer science student at **KNUST, Ghana**. I build software to understand how it works — then rebuild it because I understood it wrong the first time.
 
-How the request travels. Where the algorithm bends. Why the abstraction leaks.
+I care about the layer underneath: how the request travels, where the algorithm bends, why the abstraction leaks. My work sits where **software engineering**, **algorithms**, and **applied AI** meet, with a bias toward **backend systems** and **developer tooling**.
 
-I'm **Joseph Boafo Afful** — **arcaenux** — a computer science student at **KNUST, Ghana**. My work sits where software engineering, algorithms, and applied AI meet, with a bias toward backend systems and developer tooling.
-
-This page is a signal from the middle of that process. It changes as I do.
+**Currently:** building something with too many moving parts · learning distributed systems, applied AI, and the fine art of naming things · open to internships, collaborations, and interesting problems.
 
 > Make it work. Make it clear. Make it fast — in that order.
 
 <img src="./assets/divider.svg" width="100%" alt="" />
 
-## 01 — COORDINATES
+## 01 · The short version
 
 | | |
 |:---|:---|
-| **Identity** | Joseph Boafo Afful · arcaenux |
+| **What I do** | Backend systems · developer tooling · applied AI |
+| **How I work** | Understand it → build it → break it → explain it |
 | **Coordinates** | Kumasi, Ghana · 6.6885° N, 1.6244° W |
-| **Education** | BSc Computer Science · KNUST |
-| **Focus** | Software engineering · Algorithms · Applied AI · Backend systems |
-| **Currently** | Building in public, one system at a time |
-| **Open to** | Collaborations · Internships · Hard problems |
+| **Open to** | Internships · collaborations · interesting problems |
 
 <img src="./assets/divider.svg" width="100%" alt="" />
 
-## 02 — INSTRUMENTS
-
-<img src="./assets/layers.svg" width="100%" alt="The stack, layer by layer" />
-
-I don't collect tools. I use them to answer questions.
-
-| Layer | Components |
-|:---|:---|
-| **L7 · Application** | React · Next.js · Django · Vite |
-| **L6 · Languages** | TypeScript · JavaScript · Python · Java · C++ |
-| **L5 · Data** | MongoDB · PostgreSQL · SQLite |
-| **L4 · Runtime** | Node.js · Express · Vercel |
-| **L3 · System** | Linux · Git · GitHub · VS Code |
-
-<sub>Currently deepening: distributed systems · applied AI · developer tooling.</sub>
-
-<img src="./assets/divider.svg" width="100%" alt="" />
-
-## 03 — ARTIFACTS
+## 02 · Selected work
 
 ### 001 · [mindstep](https://github.com/arcaenux/mindstep)
 **Mental-health literacy for Ghana.** 24 topic cards across nine themes, voice and text, practice conversations, and a checked support directory. No accounts. No paywall. Built to be useful on a bad day, not to collect data.
@@ -71,7 +49,25 @@ I don't collect tools. I use them to answer questions.
 
 <img src="./assets/divider.svg" width="100%" alt="" />
 
-## 04 — TELEMETRY
+## 03 · The stack
+
+<img src="./assets/layers.svg" width="100%" alt="The stack, layer by layer" />
+
+I don't collect tools. I use them to answer questions.
+
+| Layer | Components |
+|:---|:---|
+| **L7 · Application** | React · Next.js · Django · Vite |
+| **L6 · Languages** | TypeScript · JavaScript · Python · Java · C++ |
+| **L5 · Data** | MongoDB · PostgreSQL · SQLite |
+| **L4 · Runtime** | Node.js · Express · Vercel |
+| **L3 · System** | Linux · Git · GitHub · VS Code |
+
+<sub>Currently deepening: distributed systems · applied AI · developer tooling.</sub>
+
+<img src="./assets/divider.svg" width="100%" alt="" />
+
+## 04 · The signal
 
 <img src="./assets/pulse.svg" width="100%" alt="Daily contribution signal" />
 
@@ -90,9 +86,26 @@ I don't collect tools. I use them to answer questions.
 
 <img src="./assets/divider.svg" width="100%" alt="" />
 
-## 05 — TRANSMISSION
+## 05 · The human part
 
-The fastest way to reach me is an issue on this repo. I'm always up for a conversation about systems, algorithms, developer tooling, or something you're building.
+A few things that are true:
+
+- I name things carefully. Future me is a stakeholder.
+- I debug by asking, "what did I assume?"
+- I think the best code is the code you don't have to explain twice.
+- I like systems that fail loudly and recover quietly.
+- I take walks when I'm stuck. It works more often than it should.
+- Away from the keyboard: good music, long conversations, and explaining that computer science is not the same as fixing printers.
+
+And one thing that isn't:
+
+- I have never written a bug. I have only written *unexpected features*.
+
+<img src="./assets/divider.svg" width="100%" alt="" />
+
+## 06 · Let's build something
+
+The fastest way to reach me is an issue on this repo. Bring a problem, a half-formed idea, or a bug you've been staring at for an hour. All three are welcome.
 
 <div align="center">
 
@@ -101,14 +114,6 @@ The fastest way to reach me is an issue on this repo. I'm always up for a conver
 <a href="https://github.com/arcaenux/arcaenux/issues"><img src="https://img.shields.io/badge/SAY_HELLO-OPEN_AN_ISSUE-070709?style=for-the-badge&logo=github&logoColor=F4F0E8&labelColor=FF2438" alt="Open an issue" /></a>
 
 </div>
-
-<img src="./assets/divider.svg" width="100%" alt="" />
-
-## 06 — COLOPHON
-
-The hero is a **phyllotaxis**: every day of the last year placed at the golden angle, radius by `√(day / 365)`, size and heat by contribution count. The bloom rotates once every three minutes. The pulse, spectrum, and stack are generated from the same real data by [`build_assets.py`](./build_assets.py) and refreshed by [`refresh_data.py`](./refresh_data.py), then committed as SVG. No third-party banner services. No stock templates.
-
-<sub>Type: monospace + Georgia. Palette: `#070709` / `#FF2438` / `#F4F0E8`.</sub>
 
 <details>
 <summary><code>// EOF</code></summary>
@@ -121,4 +126,6 @@ If you're reading this, you're the kind of person I want to build with. Open an 
 
 <div align="center">
 <sub>Joseph Boafo Afful · Ghana · Built with curiosity and a little bit of obsession.</sub>
+
+<sub>The hero is a phyllotaxis of 367 real days of commits — each seed is a day, brightness is contribution count. Generated by <a href="./build_assets.py"><code>build_assets.py</code></a>; refreshed by <a href="./refresh_data.py"><code>refresh_data.py</code></a>.</sub>
 </div>
