@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Generates pure SVG + SMIL assets for the profile README (no JS, no CSS, no external fonts).
+"""Generates pure SVG + SMIL assets for the ARCAENUX profile README.
+BIOS Setup Utility theme — no JS, no CSS, no external fonts.
 Run:  python3 build_assets.py   ->  ./assets/*.svg
 Edit the CONFIG block, rerun, commit."""
 import os
@@ -29,6 +30,8 @@ LAYERS = [  # (tag, label, chips)
     ("L4", "RUNTIME / INFRA", ["node.js", "express", "vercel"]),
     ("L3", "OS & TOOLING", ["linux", "git", "github", "vscode"]),
 ]
+BIOS_MENU = [" MAIN ", " ADVANCED ", " BOOT ", " SECURITY ", " EXIT "]
+BIOS_VER = "2.06"
 # ----------------------------------------
 
 BG, RED, GRAY, DIM, OK, WHITE = "#0B0B0C", "#FF2438", "#8A8A8E", "#1B1B1E", "#3DD68C", "#FFFFFF"
@@ -59,8 +62,6 @@ def hero():
 <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{RED}" stop-opacity="0"/><stop offset=".5" stop-color="{RED}" stop-opacity=".22"/><stop offset="1" stop-color="{RED}" stop-opacity="0"/></linearGradient>
 </defs>''')
     p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/><rect width="{W}" height="{H}" fill="url(#grid)"/><rect width="{W}" height="{H}" fill="url(#glow)"/>')
-
-    # binary rain
     for i in range(20):
         x = 18 + i * 45 + random.randint(-6, 6)
         dur = random.uniform(7, 13)
@@ -72,8 +73,6 @@ def hero():
             f'<g opacity=".16"><text font-family="{FONT}" font-size="12" fill="{RED if i % 5 == 0 else GRAY}">{tsp}'
             f'<animateTransform attributeName="transform" type="translate" from="0 -150" to="0 {H + 20}" dur="{dur:.1f}s" begin="{begin:.1f}s" repeatCount="indefinite"/></text></g>'
         )
-
-    # network graph
     nodes = [(560, 70), (640, 150), (720, 60), (790, 140), (860, 80), (700, 225), (600, 235), (830, 235), (520, 165)]
     edges = [(0, 1), (1, 2), (2, 3), (3, 4), (1, 5), (5, 3), (6, 1), (8, 0), (8, 6), (5, 7), (3, 7), (0, 2)]
     for a, b in edges:
@@ -89,8 +88,6 @@ def hero():
             f'<animate attributeName="stroke-opacity" values=".8;0" dur="2.4s" begin="{b}" repeatCount="indefinite"/></circle>'
             f'<circle cx="{x}" cy="{y}" r="4" fill="{RED}"/>'
         )
-
-    # title + glitch copy
     p.append(
         f'<text x="52" y="142" font-family="{FONT}" font-size="76" font-weight="800" letter-spacing="6" fill="{RED}" opacity=".55">{NAME}'
         f'<animate attributeName="x" values="52;52;46;58;52;52" keyTimes="0;.9;.92;.94;.96;1" dur="5s" repeatCount="indefinite"/></text>'
@@ -102,7 +99,6 @@ def hero():
     p.append(
         f'<rect x="{cx:.0f}" y="219" width="9" height="16" fill="{RED}"><animate attributeName="opacity" values="1;0;1" keyTimes="0;.5;1" calcMode="discrete" dur="1s" repeatCount="indefinite"/></rect>'
     )
-    # scanline + frame
     p.append(
         f'<rect x="0" y="-40" width="{W}" height="40" fill="url(#scan)"><animate attributeName="y" from="-40" to="{H}" dur="4.5s" repeatCount="indefinite"/></rect>'
     )
@@ -121,7 +117,6 @@ def boot():
     for i, c in enumerate([RED, "#F5A524", OK]):
         p.append(f'<circle cx="{24 + i * 20}" cy="18" r="6" fill="{c}"/>')
     p.append(f'<text x="{W // 2}" y="23" text-anchor="middle" font-family="{FONT}" font-size="13" fill="{GRAY}">{HOST}</text>')
-
     clips, lines = [], []
     s = 0.6
     for i, (kind, text) in enumerate(BOOT):
@@ -148,8 +143,6 @@ def boot():
             f'<text clip-path="url(#c{i})" x="30" y="{y}" font-family="{FONT}" font-size="15.5" xml:space="preserve">{body}</text>'
         )
         s += d + 0.9
-
-    # final prompt with blinking cursor, appears after the last line
     yl = TOP + len(BOOT) * LH
     fa = s / T
     p.append("<defs>" + "".join(clips) + "</defs>")
@@ -193,7 +186,6 @@ def layers():
                 f'<text x="{x + w / 2:.0f}" y="{cy + 5:.0f}" text-anchor="middle" font-family="{FONT}" font-size="13" fill="{WHITE}">{esc(c)}</text>'
             )
             x += w + 10
-    # packet travelling down the stack
     p.append(
         f'<circle r="6" fill="{RED}"><animateMotion dur="{DUR}s" repeatCount="indefinite" path="M{PX} {y0} V{y1}"/></circle>'
         f'<circle r="6" fill="none" stroke="{RED}"><animateMotion dur="{DUR}s" repeatCount="indefinite" path="M{PX} {y0} V{y1}"/>'
@@ -217,6 +209,57 @@ def divider():
         f'<rect y="9" width="140" height="2" fill="url(#p)"><animate attributeName="x" from="-140" to="{W}" dur="3.5s" repeatCount="indefinite"/></rect></svg>'
     )
     save("divider.svg", "".join(p))
+
+
+# ---------------------------------------------------------------- BIOS HEADER
+def bios_header():
+    """BIOS setup utility header: title bar + menu bar."""
+    W, H = 900, 108
+    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="ARCAENUX BIOS Setup Utility v{BIOS_VER}">']
+    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
+    p.append(f'<rect y="0" width="{W}" height="2" fill="{RED}"/>')
+    p.append(f'<rect y="{H - 2}" width="{W}" height="2" fill="{RED}"/>')
+    # Title
+    p.append(f'<text x="30" y="30" font-family="{FONT}" font-size="15" font-weight="700" letter-spacing="1" fill="{WHITE}">ARCAENUX BIOS SETUP UTILITY</text>')
+    p.append(f'<text x="30" y="48" font-family="{FONT}" font-size="10.5" fill="{GRAY}">(C) 2026 ARCAENUX  \u00b7  JOSEPH BOAFO AFFUL  \u00b7  KNUST, GHANA  \u00b7  v{BIOS_VER}</text>')
+    # Menu bar
+    my = 78
+    x = 30
+    for i, item in enumerate(BIOS_MENU):
+        active = (i == 0)
+        fill = RED if active else "#121216"
+        tcol = WHITE if active else GRAY
+        wdt = len(item) * 8.4 + 10
+        p.append(f'<rect x="{x}" y="{my - 13}" width="{wdt}" height="18" rx="2" fill="{fill}"/>')
+        p.append(f'<text x="{x + 6}" y="{my + 2}" font-family="{FONT}" font-size="12" font-weight="700" fill="{tcol}">{item}</text>')
+        x += wdt + 8
+    # Key hints
+    p.append(f'<text x="{W - 30}" y="{H - 8}" text-anchor="end" font-family="{FONT}" font-size="10" fill="#5A5A60">[\u2191\u2193] Navigate   [Enter] Select   [Esc] Exit   [F1] Help</text>')
+    p.append("</svg>")
+    save("bios-header.svg", "".join(p))
+
+
+# ---------------------------------------------------------------- BIOS KEYBAR
+def bios_keybar():
+    """Bottom BIOS key hint bar."""
+    W, H = 900, 26
+    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="presentation">']
+    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
+    p.append(f'<rect y="0" width="{W}" height="1" fill="#2A2A2E"/>')
+    p.append(f'<text x="30" y="18" font-family="{FONT}" font-size="10" fill="#5A5A60">[Tab] Switch panel   [Enter] Open   [Esc] Back   [F10] Save &amp; Exit</text>')
+    p.append(f'<text x="{W - 30}" y="18" text-anchor="end" font-family="{FONT}" font-size="10" fill="#5A5A60">ARCAENUX v{BIOS_VER}</text>')
+    p.append("</svg>")
+    save("bios-keybar.svg", "".join(p))
+
+
+# ---------------------------------------------------------------- CURSOR
+def cursor():
+    """Blinking block cursor."""
+    W, H = 16, 20
+    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="cursor">']
+    p.append(f'<rect width="{W}" height="{H}" fill="{RED}"><animate attributeName="opacity" values="1;0;1" keyTimes="0;.5;1" calcMode="discrete" dur="1s" repeatCount="indefinite"/></rect>')
+    p.append("</svg>")
+    save("cursor.svg", "".join(p))
 
 
 # ---------------------------------------------------------------- FOOTER
@@ -245,4 +288,7 @@ if __name__ == "__main__":
     boot()
     layers()
     divider()
+    bios_header()
+    bios_keybar()
+    cursor()
     footer()
