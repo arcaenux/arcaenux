@@ -106,7 +106,7 @@ The fastest way to reach me is an issue on this repo. I'm always up for a conver
 
 ## 06 — COLOPHON
 
-The hero is a **phyllotaxis**: every day of the last year placed at the golden angle, radius by `√(day / 365)`, size and heat by contribution count. The bloom rotates once every three minutes. The pulse, spectrum, and stack are generated from the same real data by [`build_assets.py`](./build_assets.py), then committed as SVG. No third-party banner services. No stock templates.
+The hero is a **phyllotaxis**: every day of the last year placed at the golden angle, radius by `√(day / 365)`, size and heat by contribution count. The bloom rotates once every three minutes. The pulse, spectrum, and stack are generated from the same real data by [`build_assets.py`](./build_assets.py) and refreshed by [`refresh_data.py`](./refresh_data.py), then committed as SVG. No third-party banner services. No stock templates.
 
 <sub>Type: monospace + Georgia. Palette: `#070709` / `#FF2438` / `#F4F0E8`.</sub>
 
