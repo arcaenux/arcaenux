@@ -1,96 +1,124 @@
-<img src="./assets/bios-header.svg" width="100%" alt="ARCAENUX BIOS Setup Utility" />
+<img src="./assets/signal.svg" width="100%" alt="ARCAENUX — a year in commits, rendered as a generative bloom of 367 days" />
 
-<details open>
-<summary>▶ [MAIN] System Information</summary>
+## 00 — SIGNAL
 
-<img src="./assets/boot.svg" width="100%" alt="Power-on self-test" />
+I build systems to understand them. Not the demo — the layer underneath.
 
-I'm **Joseph Boafo Afful** — **Arcaenux** online. A computer science student at **Kwame Nkrumah University of Science and Technology (KNUST)** in Ghana, building software to understand how systems behave.
+How the request travels. Where the algorithm bends. Why the abstraction leaks.
 
-I care about the layer underneath: how the algorithm scales, how the request travels, why the abstraction leaks. My interests sit where **software engineering**, **algorithms**, and **applied AI** meet — with a soft spot for **backend systems** and **developer tooling**.
+I'm **Joseph Boafo Afful** — **arcaenux** — a computer science student at **KNUST, Ghana**. My work sits where software engineering, algorithms, and applied AI meet, with a bias toward backend systems and developer tooling.
 
-I learn by building. Everything here is part of the loop: **learn → build → break → investigate → rebuild.**
+This page is a signal from the middle of that process. It changes as I do.
 
-</details>
+> Make it work. Make it clear. Make it fast — in that order.
 
-<details>
-<summary>▶ [ADVANCED] Peripheral Configuration</summary>
+<img src="./assets/divider.svg" width="100%" alt="" />
+
+## 01 — COORDINATES
+
+| | |
+|:---|:---|
+| **Identity** | Joseph Boafo Afful · arcaenux |
+| **Coordinates** | Kumasi, Ghana · 6.6885° N, 1.6244° W |
+| **Education** | BSc Computer Science · KNUST |
+| **Focus** | Software engineering · Algorithms · Applied AI · Backend systems |
+| **Currently** | Building in public, one system at a time |
+| **Open to** | Collaborations · Internships · Hard problems |
+
+<img src="./assets/divider.svg" width="100%" alt="" />
+
+## 02 — INSTRUMENTS
 
 <img src="./assets/layers.svg" width="100%" alt="The stack, layer by layer" />
 
-<p align="center"><sub>I don't collect tools. I use them to answer questions.</sub></p>
+I don't collect tools. I use them to answer questions.
 
 | Layer | Components |
 |:---|:---|
-| **L7 Application** | React · Next.js · Django · Vite |
-| **L6 Languages** | Java · Python · C++ · TypeScript · JavaScript |
-| **L5 Data** | MongoDB · PostgreSQL · SQLite |
-| **L4 Runtime / Infra** | Node.js · Express · Vercel |
-| **L3 OS & Tooling** | Linux · Git · GitHub · VS Code |
+| **L7 · Application** | React · Next.js · Django · Vite |
+| **L6 · Languages** | TypeScript · JavaScript · Python · Java · C++ |
+| **L5 · Data** | MongoDB · PostgreSQL · SQLite |
+| **L4 · Runtime** | Node.js · Express · Vercel |
+| **L3 · System** | Linux · Git · GitHub · VS Code |
 
-</details>
+<sub>Currently deepening: distributed systems · applied AI · developer tooling.</sub>
 
-<details>
-<summary>▶ [BOOT] Boot Device Priority</summary>
+<img src="./assets/divider.svg" width="100%" alt="" />
 
-| Priority | Device | Project | Purpose |
-|:---:|:---|:---|:---|
-| **01** | /dev/sda1 | [mindstep](https://github.com/arcaenux/mindstep) | Free mental-health literacy app for Ghana — 24 topic cards across nine themes, voice and text, practice conversations, checked support directory. No accounts. No paywall. |
-| **02** | /dev/sda2 | [course-rundown](https://github.com/arcaenux/course-rundown) | Interactive study rooms built around real course material — formula calculators, exam banks, timed simulators, C++ memory/pointer visualizer. |
-| **03** | /dev/sda3 | [SaveDat](https://github.com/arcaenux/SaveDat) | Java CLI that finds the files you'd lose if one drive failed — matching copies by content, not filename. Read-only by design. |
-| **04** | /dev/sda4 | [RepoClue](https://github.com/arcaenux/RepoClue) | Python CLI for discovering, evaluating, and organizing public GitHub repositories without leaving the terminal. |
+## 03 — ARTIFACTS
 
-<sub>Also loading: [mern-chat](https://github.com/arcaenux/mern-chat) · [qr_scanner](https://github.com/arcaenux/qr_scanner) · [Axellemd_projects](https://github.com/arcaenux/Axellemd_projects)</sub>
+### 001 · [mindstep](https://github.com/arcaenux/mindstep)
+**Mental-health literacy for Ghana.** 24 topic cards across nine themes, voice and text, practice conversations, and a checked support directory. No accounts. No paywall. Built to be useful on a bad day, not to collect data.
 
-</details>
+`TypeScript` · `React` · `Vite`
 
-<details>
-<summary>▶ [SECURITY] Access Log</summary>
+### 002 · [course-rundown](https://github.com/arcaenux/course-rundown)
+**Interactive study rooms.** Formula calculators, exam banks, timed simulators, and a C++ memory/pointer visualizer — built around real course material instead of generic flashcards.
+
+`TypeScript` · `React` · `Education`
+
+### 003 · [SaveDat](https://github.com/arcaenux/SaveDat)
+**A Java CLI that finds the files you'd lose if one drive failed.** Matches copies by content, not filename. Read-only by design, because a safety tool should never be the reason you lose something.
+
+`Java` · `CLI` · `Systems`
+
+### 004 · [RepoClue](https://github.com/arcaenux/RepoClue)
+**Discover, evaluate, and organize public GitHub repositories from the terminal.** A Python CLI for the part of research that happens before you clone.
+
+`Python` · `CLI` · `Developer tooling`
+
+<sub>Also in the archive: [mern-chat](https://github.com/arcaenux/mern-chat) · [qr_scanner](https://github.com/arcaenux/qr_scanner) · [Axellemd_projects](https://github.com/arcaenux/Axellemd_projects)</sub>
+
+<img src="./assets/divider.svg" width="100%" alt="" />
+
+## 04 — TELEMETRY
+
+<img src="./assets/pulse.svg" width="100%" alt="Daily contribution signal" />
+
+<img src="./assets/spectrum.svg" width="100%" alt="Language spectrum by bytes" />
 
 <div align="center">
-
-<table align="center">
+<table>
 <tr>
-<td width="50%"><img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=arcaenux&amp;theme=github_dark&amp;bg_color=0B0B0C&amp;title_color=FF2438&amp;text_color=FFFFFF&amp;icon_color=FF2438" width="100%" alt="GitHub stats" /></td>
-<td width="50%"><img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=arcaenux&amp;theme=github_dark&amp;bg_color=0B0B0C&amp;title_color=FF2438&amp;text_color=FFFFFF" width="100%" alt="Top languages by repository" /></td>
+<td width="50%"><img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=arcaenux&theme=github_dark&bg_color=070709&title_color=FF2438&text_color=F4F0E8&icon_color=FF2438&border_color=222228" width="100%" alt="GitHub stats" /></td>
+<td width="50%"><img src="https://streak-stats.demolab.com?user=arcaenux&hide_border=true&background=070709&stroke=222228&ring=FF2438&fire=FF6B4A&currStreakNum=F4F0E8&currStreakLabel=FF2438&sideNums=F4F0E8&sideLabels=8A8A8E&dates=8A8A8E" width="100%" alt="Contribution streak" /></td>
 </tr>
 </table>
+</div>
 
-<img src="https://streak-stats.demolab.com?user=arcaenux&amp;hide_border=true&amp;background=0B0B0C&amp;stroke=2A0B0D&amp;ring=FF2438&amp;fire=FF2438&amp;currStreakNum=FFFFFF&amp;currStreakLabel=FF2438&amp;sideNums=FFFFFF&amp;sideLabels=8A8A8E&amp;dates=8A8A8E" width="70%" alt="Contribution streak" />
+<img src="https://github-activity-graph.vercel.app/graph?username=arcaenux&bg_color=070709&color=FF2438&line=FF2438&point=F4F0E8&area=true&area_color=FF2438&hide_border=true&custom_title=CONTRIBUTION%20ACTIVITY" width="100%" alt="Contribution activity graph" />
 
-<img src="https://github-activity-graph.vercel.app/graph?username=arcaenux&amp;bg_color=0B0B0C&amp;color=FF2438&amp;line=FF2438&amp;point=FFFFFF&amp;area=true&amp;area_color=FF2438&amp;hide_border=true&amp;custom_title=CONTRIBUTION%20ACTIVITY" width="100%" alt="Contribution activity graph" />
+<img src="./assets/divider.svg" width="100%" alt="" />
 
-<picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/arcaenux/arcaenux/output/github-snake-dark.svg" />
-<source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/arcaenux/arcaenux/output/github-snake.svg" />
-<img src="https://raw.githubusercontent.com/arcaenux/arcaenux/output/github-snake-dark.svg" width="100%" alt="Animated contribution snake" />
-</picture>
+## 05 — TRANSMISSION
+
+The fastest way to reach me is an issue on this repo. I'm always up for a conversation about systems, algorithms, developer tooling, or something you're building.
+
+<div align="center">
+
+<a href="https://github.com/arcaenux"><img src="https://img.shields.io/badge/GITHUB-ARCAENUX-070709?style=for-the-badge&logo=github&logoColor=F4F0E8&labelColor=FF2438" alt="GitHub" /></a>
+<a href="https://github.com/arcaenux?tab=repositories"><img src="https://img.shields.io/badge/REPOSITORIES-EXPLORE-070709?style=for-the-badge&logo=github&logoColor=F4F0E8&labelColor=FF2438" alt="Repositories" /></a>
+<a href="https://github.com/arcaenux/arcaenux/issues"><img src="https://img.shields.io/badge/SAY_HELLO-OPEN_AN_ISSUE-070709?style=for-the-badge&logo=github&logoColor=F4F0E8&labelColor=FF2438" alt="Open an issue" /></a>
 
 </div>
 
-</details>
+<img src="./assets/divider.svg" width="100%" alt="" />
+
+## 06 — COLOPHON
+
+The hero is a **phyllotaxis**: every day of the last year placed at the golden angle, radius by `√(day / 365)`, size and heat by contribution count. The bloom rotates once every three minutes. The pulse, spectrum, and stack are generated from the same real data by [`build_assets.py`](./build_assets.py), then committed as SVG. No third-party banner services. No stock templates.
+
+<sub>Type: monospace + Georgia. Palette: `#070709` / `#FF2438` / `#F4F0E8`.</sub>
 
 <details>
-<summary>▶ [EXIT] Save & Exit</summary>
+<summary><code>// EOF</code></summary>
 
-I'm always up for a conversation about systems, algorithms, developer tooling, or something you're building. The fastest way to reach me is an issue on this repo.
-
-<div align="center">
-
-<a href="https://github.com/arcaenux"><img src="https://img.shields.io/badge/GITHUB-ARCAENUX-0B0B0C?style=for-the-badge&logo=github&logoColor=white&labelColor=FF2438" alt="GitHub" /></a>
-<a href="https://github.com/arcaenux?tab=repositories"><img src="https://img.shields.io/badge/REPOSITORIES-EXPLORE-0B0B0C?style=for-the-badge&logo=github&logoColor=white&labelColor=FF2438" alt="Repositories" /></a>
-<a href="https://github.com/arcaenux/arcaenux/issues"><img src="https://img.shields.io/badge/SAY_HELLO-OPEN_AN_ISSUE-0B0B0C?style=for-the-badge&logo=github&logoColor=white&labelColor=FF2438" alt="Open an issue" /></a>
-
-</div>
+If you're reading this, you're the kind of person I want to build with. Open an issue. Tell me what you're working on.
 
 </details>
 
-<img src="./assets/bios-keybar.svg" width="100%" alt="" />
-
-<img src="./assets/footer.svg" width="100%" alt="Think beyond the obvious." />
+<img src="./assets/footer.svg" width="100%" alt="The signal continues." />
 
 <div align="center">
-
 <sub>Joseph Boafo Afful · Ghana · Built with curiosity and a little bit of obsession.</sub>
-
 </div>

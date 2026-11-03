@@ -1,294 +1,522 @@
 #!/usr/bin/env python3
-"""Generates pure SVG + SMIL assets for the ARCAENUX profile README.
-BIOS Setup Utility theme — no JS, no CSS, no external fonts.
-Run:  python3 build_assets.py   ->  ./assets/*.svg
-Edit the CONFIG block, rerun, commit."""
+"""ARCAENUX / SIGNAL — generative profile assets built from real GitHub activity.
+
+Reads:
+  data/contributions.json  367 days of contribution counts
+  data/repos.json          repo + language metadata
+
+Writes:
+  assets/signal.svg        hero: a year in bloom (phyllotaxis of daily commits)
+  assets/pulse.svg         daily contribution seismograph
+  assets/spectrum.svg      language spectrum by bytes
+  assets/layers.svg        the stack, layer by layer
+  assets/divider.svg       signal rule
+  assets/footer.svg        closing plate
+
+Run:  python build_assets.py
+"""
+import datetime
+import json
+import math
 import os
-import random
 
-# ---------------- CONFIG ----------------
-NAME = "ARCAENUX"
-SUB = "COMPUTER SCIENCE  \u2022  SOFTWARE  \u2022  SYSTEMS  \u2022  AI"
-PROMPT = "> think deep. build bold. understand more."
-HOST = "joseph@arcaenux: ~"
-BOOT = [  # (kind, text)  kind: cmd | out | ok
-    ("cmd", "whoami"),
-    ("out", "joseph boafo afful  //  arcaenux"),
-    ("cmd", "cat education.txt"),
-    ("out", "bsc computer science @ knust  \u00b7  ghana"),
-    ("cmd", "cat focus.txt"),
-    ("out", "software engineering \u00b7 algorithms \u00b7 ai \u00b7 backend systems"),
-    ("cmd", "./loop.sh"),
-    ("out", "learn \u2192 build \u2192 break \u2192 investigate \u2192 rebuild"),
-    ("cmd", "status"),
-    ("ok", "building in public"),
-]
-LAYERS = [  # (tag, label, chips)
-    ("L7", "APPLICATION", ["react", "next.js", "django", "vite"]),
-    ("L6", "LANGUAGES", ["java", "python", "c++", "typescript", "javascript"]),
-    ("L5", "DATA", ["mongodb", "postgresql", "sqlite"]),
-    ("L4", "RUNTIME / INFRA", ["node.js", "express", "vercel"]),
-    ("L3", "OS & TOOLING", ["linux", "git", "github", "vscode"]),
-]
-BIOS_MENU = [" MAIN ", " ADVANCED ", " BOOT ", " SECURITY ", " EXIT "]
-BIOS_VER = "2.06"
-# ----------------------------------------
-
-BG, RED, GRAY, DIM, OK, WHITE = "#0B0B0C", "#FF2438", "#8A8A8E", "#1B1B1E", "#3DD68C", "#FFFFFF"
-FONT = "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-HEAD = '<?xml version="1.0" encoding="UTF-8"?>\n'
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
+ROOT = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(ROOT, "assets")
 os.makedirs(OUT, exist_ok=True)
-random.seed(7)
+
+# ---------------------------------------------------------------- palette
+BG    = "#070709"
+INK   = "#0E0E12"
+RED   = "#FF2438"
+EMBER = "#FF6B4A"
+HOT   = "#FFD9D0"
+BONE  = "#F4F0E8"
+ASH   = "#8A8A8E"
+DIM   = "#5A5A60"
+FAINT = "#2A2A30"
+LINE  = "#222228"
+
+MONO  = "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+SERIF = "Georgia, 'Times New Roman', serif"
+
+NAME = "ARCAENUX"
+TAGLINE = "A YEAR IN COMMITS"
+
+# ---------------------------------------------------------------- data
+with open(os.path.join(ROOT, "data", "contributions.json"), encoding="utf-8") as fh:
+    CONTRIB = json.load(fh)
+DAYS = CONTRIB["days"]
+COUNTS = [d["count"] for d in DAYS]
+N = len(DAYS)
+TOTAL = CONTRIB["total"]
+PEAK = max(COUNTS)
+START = CONTRIB["start"]
+END = CONTRIB["end"]
+
+with open(os.path.join(ROOT, "data", "repos.json"), encoding="utf-8") as fh:
+    REPOS = json.load(fh)
 
 
-def esc(s):
-    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+def esc(text):
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def save(name, svg):
-    with open(os.path.join(OUT, name), "w", encoding="utf-8") as f:
-        f.write(HEAD + svg)
-    print("wrote", name)
-
-
-# ---------------------------------------------------------------- HERO
-def hero():
-    W, H = 900, 280
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="{NAME}">']
-    p.append(f'''<defs>
-<pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="{DIM}" stroke-width="1"/></pattern>
-<radialGradient id="glow" cx="82%" cy="50%" r="55%"><stop offset="0" stop-color="{RED}" stop-opacity=".38"/><stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>
-<linearGradient id="scan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{RED}" stop-opacity="0"/><stop offset=".5" stop-color="{RED}" stop-opacity=".22"/><stop offset="1" stop-color="{RED}" stop-opacity="0"/></linearGradient>
-</defs>''')
-    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/><rect width="{W}" height="{H}" fill="url(#grid)"/><rect width="{W}" height="{H}" fill="url(#glow)"/>')
-    for i in range(20):
-        x = 18 + i * 45 + random.randint(-6, 6)
-        dur = random.uniform(7, 13)
-        begin = -random.uniform(0, 12)
-        tsp = "".join(
-            f'<tspan x="{x}" dy="{0 if k == 0 else 14}">{random.choice("01")}</tspan>' for k in range(10)
-        )
-        p.append(
-            f'<g opacity=".16"><text font-family="{FONT}" font-size="12" fill="{RED if i % 5 == 0 else GRAY}">{tsp}'
-            f'<animateTransform attributeName="transform" type="translate" from="0 -150" to="0 {H + 20}" dur="{dur:.1f}s" begin="{begin:.1f}s" repeatCount="indefinite"/></text></g>'
-        )
-    nodes = [(560, 70), (640, 150), (720, 60), (790, 140), (860, 80), (700, 225), (600, 235), (830, 235), (520, 165)]
-    edges = [(0, 1), (1, 2), (2, 3), (3, 4), (1, 5), (5, 3), (6, 1), (8, 0), (8, 6), (5, 7), (3, 7), (0, 2)]
-    for a, b in edges:
-        (x1, y1), (x2, y2) = nodes[a], nodes[b]
-        p.append(
-            f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{RED}" stroke-opacity=".45" stroke-width="1" stroke-dasharray="4 6">'
-            f'<animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.4s" repeatCount="indefinite"/></line>'
-        )
-    for i, (x, y) in enumerate(nodes):
-        b = f"{random.uniform(0, 2):.1f}s"
-        p.append(
-            f'<circle cx="{x}" cy="{y}" r="4" fill="none" stroke="{RED}"><animate attributeName="r" values="4;16" dur="2.4s" begin="{b}" repeatCount="indefinite"/>'
-            f'<animate attributeName="stroke-opacity" values=".8;0" dur="2.4s" begin="{b}" repeatCount="indefinite"/></circle>'
-            f'<circle cx="{x}" cy="{y}" r="4" fill="{RED}"/>'
-        )
-    p.append(
-        f'<text x="52" y="142" font-family="{FONT}" font-size="76" font-weight="800" letter-spacing="6" fill="{RED}" opacity=".55">{NAME}'
-        f'<animate attributeName="x" values="52;52;46;58;52;52" keyTimes="0;.9;.92;.94;.96;1" dur="5s" repeatCount="indefinite"/></text>'
-        f'<text x="50" y="140" font-family="{FONT}" font-size="76" font-weight="800" letter-spacing="6" fill="{WHITE}">{NAME}</text>'
+def txt(x, y, text, size, fill, weight="400", ls="0", anchor="start", family=MONO):
+    return (
+        f'<text x="{x}" y="{y}" font-family="{family}" font-size="{size}" '
+        f'font-weight="{weight}" letter-spacing="{ls}" fill="{fill}" '
+        f'text-anchor="{anchor}">{esc(text)}</text>'
     )
-    p.append(f'<text x="52" y="182" font-family="{FONT}" font-size="15" letter-spacing="4" fill="{GRAY}" xml:space="preserve">{esc(SUB)}</text>')
-    p.append(f'<text x="52" y="232" font-family="{FONT}" font-size="16" fill="{RED}">{esc(PROMPT)}</text>')
-    cx = 52 + len(PROMPT) * 9.6 + 4
-    p.append(
-        f'<rect x="{cx:.0f}" y="219" width="9" height="16" fill="{RED}"><animate attributeName="opacity" values="1;0;1" keyTimes="0;.5;1" calcMode="discrete" dur="1s" repeatCount="indefinite"/></rect>'
-    )
-    p.append(
-        f'<rect x="0" y="-40" width="{W}" height="40" fill="url(#scan)"><animate attributeName="y" from="-40" to="{H}" dur="4.5s" repeatCount="indefinite"/></rect>'
-    )
-    p.append(f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" fill="none" stroke="#2A0B0D"/></svg>')
-    save("hero.svg", "".join(p))
 
 
-# ---------------------------------------------------------------- BOOT TERMINAL
-def boot():
-    W, LH, TOP, T = 900, 28, 84, 17.0
-    H = TOP + LH * (len(BOOT) + 1) + 24
-    CW = 9.9
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="terminal">']
-    p.append(f'<rect width="{W}" height="{H}" rx="10" fill="{BG}" stroke="#2A0B0D"/>')
-    p.append(f'<rect width="{W}" height="36" rx="10" fill="#141416"/><rect y="26" width="{W}" height="10" fill="#141416"/>')
-    for i, c in enumerate([RED, "#F5A524", OK]):
-        p.append(f'<circle cx="{24 + i * 20}" cy="18" r="6" fill="{c}"/>')
-    p.append(f'<text x="{W // 2}" y="23" text-anchor="middle" font-family="{FONT}" font-size="13" fill="{GRAY}">{HOST}</text>')
-    clips, lines = [], []
-    s = 0.6
-    for i, (kind, text) in enumerate(BOOT):
-        y = TOP + i * LH
-        prefix = "$ " if kind == "cmd" else ("[ OK ] " if kind == "ok" else "")
-        full = prefix + text
-        n = len(full)
-        d = min(1.4, max(0.5, n * 0.045)) if kind == "cmd" else 0.5
-        times = [0, s / T] + [(s + d * k / n) / T for k in range(1, n + 1)] + [0.97, 1]
-        widths = [0, 0] + [round(CW * k, 1) for k in range(1, n + 1)] + [0, 0]
-        kt = ";".join(f"{t:.4f}" for t in times)
-        vs = ";".join(str(w) for w in widths)
-        clips.append(
-            f'<clipPath id="c{i}"><rect x="30" y="{y - 20}" height="26" width="0">'
-            f'<animate attributeName="width" values="{vs}" keyTimes="{kt}" calcMode="discrete" dur="{T}s" repeatCount="indefinite"/></rect></clipPath>'
-        )
-        if kind == "cmd":
-            body = f'<tspan fill="{RED}">$ </tspan><tspan fill="{WHITE}">{esc(text)}</tspan>'
-        elif kind == "ok":
-            body = f'<tspan fill="{OK}">[ OK ] </tspan><tspan fill="{WHITE}">{esc(text)}</tspan>'
-        else:
-            body = f'<tspan fill="{GRAY}">{esc(text)}</tspan>'
-        lines.append(
-            f'<text clip-path="url(#c{i})" x="30" y="{y}" font-family="{FONT}" font-size="15.5" xml:space="preserve">{body}</text>'
-        )
-        s += d + 0.9
-    yl = TOP + len(BOOT) * LH
-    fa = s / T
-    p.append("<defs>" + "".join(clips) + "</defs>")
-    p.extend(lines)
+def color_for(count):
+    if count == 0:
+        return "#2A1014", 0.55
+    if count <= 2:
+        return "#7A1622", 0.85
+    if count <= 5:
+        return RED, 0.92
+    if count <= 9:
+        return EMBER, 0.95
+    return HOT, 1.0
+
+
+def save(name, body):
+    svg = '<?xml version="1.0" encoding="UTF-8"?>\n' + body
+    with open(os.path.join(OUT, name), "w", encoding="utf-8") as fh:
+        fh.write(svg)
+    print(f"wrote {name:16s} {len(svg):>7,} bytes")
+
+
+# ---------------------------------------------------------------- hero
+def signal():
+    W, H = 900, 600
+    cx, cy, R = 300, 300, 238
+    p = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
+        f'width="{W}" height="{H}" role="img" '
+        f'aria-label="{NAME} — {TAGLINE}: a generative bloom of {N} days and {TOTAL} contributions">'
+    ]
     p.append(
-        f'<g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;{fa:.4f};{fa + 0.001:.4f};0.97;0.971;1" calcMode="discrete" dur="{T}s" repeatCount="indefinite"/>'
-        f'<text x="30" y="{yl}" font-family="{FONT}" font-size="15.5" fill="{RED}">$ </text>'
-        f'<rect x="{30 + 2 * CW:.0f}" y="{yl - 14}" width="9" height="17" fill="{RED}"><animate attributeName="opacity" values="1;0;1" keyTimes="0;.5;1" calcMode="discrete" dur="1s" repeatCount="indefinite"/></rect></g>'
+        f'<defs>'
+        f'<radialGradient id="glow" cx="33%" cy="50%" r="58%">'
+        f'<stop offset="0" stop-color="{RED}" stop-opacity=".17"/>'
+        f'<stop offset=".55" stop-color="{RED}" stop-opacity=".04"/>'
+        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
+        f'<radialGradient id="vig" cx="50%" cy="50%" r="72%">'
+        f'<stop offset=".55" stop-color="#000" stop-opacity="0"/>'
+        f'<stop offset="1" stop-color="#000" stop-opacity=".62"/></radialGradient>'
+        f'<radialGradient id="coreglow" cx="50%" cy="50%" r="50%">'
+        f'<stop offset="0" stop-color="{HOT}" stop-opacity=".9"/>'
+        f'<stop offset=".4" stop-color="{RED}" stop-opacity=".5"/>'
+        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
+        f'</defs>'
+    )
+    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
+
+    grid = []
+    for x in range(0, W + 1, 36):
+        grid.append(f'<line x1="{x}" y1="0" x2="{x}" y2="{H}"/>')
+    for y in range(0, H + 1, 36):
+        grid.append(f'<line x1="0" y1="{y}" x2="{W}" y2="{y}"/>')
+    p.append(f'<g stroke="#FFFFFF" stroke-opacity=".022" stroke-width="1">{"".join(grid)}</g>')
+    p.append(f'<rect width="{W}" height="{H}" fill="url(#glow)"/>')
+
+    for d in (
+        "M24 40 V24 H40",
+        "M876 24 V40 M876 24 H860",
+        "M24 560 V576 H40",
+        "M876 576 V560 M876 576 H860",
+    ):
+        p.append(f'<path d="{d}" fill="none" stroke="{FAINT}" stroke-width="1"/>')
+
+    p.append(txt(30, 30, f"{NAME} / SIGNAL", 9, ASH, "700", "3"))
+    p.append(txt(30, 45, f"ISSUE 001  ·  {START[:4]}—{END[:4]}", 8, DIM, "400", "2"))
+
+    bloom = [
+        f'<g><animateTransform attributeName="transform" type="rotate" '
+        f'from="0 {cx} {cy}" to="360 {cx} {cy}" dur="180s" repeatCount="indefinite"/>'
+    ]
+
+    seen_months = set()
+    for i, day in enumerate(DAYS):
+        key = day["date"][:7]
+        if key in seen_months:
+            continue
+        seen_months.add(key)
+        rr = 16 + R * math.sqrt(i / (N - 1))
+        bloom.append(
+            f'<circle cx="{cx}" cy="{cy}" r="{rr:.1f}" fill="none" '
+            f'stroke="#FFFFFF" stroke-opacity=".035" stroke-width=".8"/>'
+        )
+
+    for arm in range(3):
+        pts = []
+        for j in range(151):
+            angle = (j / 150) * 4 * math.pi + arm * 2 * math.pi / 3
+            rr = 16 + R * (j / 150)
+            pts.append(f"{cx + rr * math.cos(angle):.1f},{cy + rr * math.sin(angle):.1f}")
+        bloom.append(
+            f'<polyline points="{" ".join(pts)}" fill="none" stroke="{RED}" '
+            f'stroke-opacity=".045" stroke-width="1"/>'
+        )
+
+    top_days = set(sorted(range(N), key=lambda i: COUNTS[i], reverse=True)[:8])
+    for i, day in enumerate(DAYS):
+        count = day["count"]
+        t = i / (N - 1)
+        angle = i * math.radians(137.507764) - math.pi / 2
+        rr = 16 + R * math.sqrt(t)
+        x = cx + rr * math.cos(angle)
+        y = cy + rr * math.sin(angle)
+        size = 1.2 + min(count, 20) * 0.22
+        fill, opacity = color_for(count)
+        if count >= 5:
+            bloom.append(
+                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{size * 2.6:.1f}" '
+                f'fill="{RED}" opacity="{0.05 + min(count, 20) / 20 * 0.09:.2f}"/>'
+            )
+        bloom.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{size:.1f}" fill="{fill}" opacity="{opacity}"/>'
+        )
+        if i in top_days:
+            bloom.append(
+                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{size + 5:.1f}" fill="none" '
+                f'stroke="{HOT}" stroke-opacity=".35" stroke-width=".8">'
+                f'<animate attributeName="r" values="{size + 4:.1f};{size + 11:.1f}" '
+                f'dur="2.8s" repeatCount="indefinite"/>'
+                f'<animate attributeName="stroke-opacity" values=".45;0" '
+                f'dur="2.8s" repeatCount="indefinite"/></circle>'
+            )
+
+    bloom.append(
+        f'<circle cx="{cx}" cy="{cy}" r="252" fill="none" stroke="{RED}" '
+        f'stroke-opacity=".16" stroke-width="1" stroke-dasharray="1 7"/>'
+    )
+    bloom.append(
+        f'<circle cx="{cx}" cy="{cy}" r="260" fill="none" stroke="{RED}" '
+        f'stroke-opacity=".35" stroke-width="1.6" stroke-dasharray="40 1230">'
+        f'<animateTransform attributeName="transform" type="rotate" '
+        f'from="0 {cx} {cy}" to="360 {cx} {cy}" dur="40s" repeatCount="indefinite"/>'
+        f'</circle>'
+    )
+    for k in range(24):
+        angle = k * math.pi / 12
+        is_long = k % 2 == 0
+        r1, r2 = 256, (264 if is_long else 261)
+        bloom.append(
+            f'<line x1="{cx + r1 * math.cos(angle):.1f}" y1="{cy + r1 * math.sin(angle):.1f}" '
+            f'x2="{cx + r2 * math.cos(angle):.1f}" y2="{cy + r2 * math.sin(angle):.1f}" '
+            f'stroke="{ASH}" stroke-opacity="{0.55 if is_long else 0.28}" stroke-width="1"/>'
+        )
+    bloom.append("</g>")
+    p.extend(bloom)
+
+    p.append(f'<rect width="{W}" height="{H}" fill="url(#vig)" pointer-events="none"/>')
+
+    p.append(
+        f'<circle cx="{cx}" cy="{cy}" r="30" fill="url(#coreglow)" opacity=".65">'
+        f'<animate attributeName="opacity" values=".45;.8;.45" dur="3.6s" repeatCount="indefinite"/>'
+        f'</circle>'
+    )
+    p.append(
+        f'<circle cx="{cx}" cy="{cy}" r="4" fill="{HOT}">'
+        f'<animate attributeName="r" values="3.5;6;3.5" dur="3.6s" repeatCount="indefinite"/>'
+        f'</circle>'
+    )
+
+    p.append(f'<line x1="570" y1="80" x2="570" y2="520" stroke="{LINE}" stroke-width="1"/>')
+    for yy in range(80, 521, 40):
+        p.append(f'<line x1="570" y1="{yy}" x2="576" y2="{yy}" stroke="{FAINT}" stroke-width="1"/>')
+
+    x = 602
+    p.append(txt(x, 112, "SIGNAL / 001", 10, RED, "700", "3"))
+    p.append(txt(x, 166, NAME, 48, BONE, "800", "1"))
+    p.append(f'<line x1="{x}" y1="186" x2="870" y2="186" stroke="{RED}" stroke-width="1"/>')
+    p.append(txt(x, 212, TAGLINE, 11, ASH, "400", "4"))
+    p.append(txt(x, 320, str(TOTAL), 104, RED, "800", "-2"))
+    p.append(txt(x, 348, "CONTRIBUTIONS", 10, ASH, "400", "3"))
+    p.append(txt(x, 380, f"{N} DAYS   ·   PEAK {PEAK}   ·   {START[:4]}—{END[:4]}", 9.5, ASH, "400", ".5"))
+    p.append(f'<line x1="{x}" y1="404" x2="870" y2="404" stroke="{LINE}" stroke-width="1"/>')
+    p.append(txt(x, 434, "JOSEPH BOAFO AFFUL", 11, BONE, "700", "2"))
+    p.append(txt(x, 454, "COMPUTER SCIENCE · KNUST", 9.5, ASH, "400", "1"))
+    p.append(txt(x, 472, "GHANA · 6.6885° N, 1.6244° W", 9.5, ASH, "400", ".5"))
+    p.append(txt(x, 500, "GENERATED FROM REAL ACTIVITY", 8, DIM, "400", "1.5"))
+    p.append(txt(x, 514, f"LAST SYNC {datetime.date.today().isoformat()}", 8, DIM, "400", "1.5"))
+
+    p.append(
+        f'<circle cx="{x + 4}" cy="548" r="3.5" fill="{RED}">'
+        f'<animate attributeName="opacity" values="1;.15;1" dur="1.8s" repeatCount="indefinite"/>'
+        f'</circle>'
+    )
+    p.append(txt(x + 16, 552, "LIVE SIGNAL", 9, RED, "700", "2.5"))
+
+    p.append(txt(30, 560, "FIG. 01 — A YEAR IN BLOOM", 9, ASH, "700", "2"))
+    p.append(txt(30, 575, "EACH SEED IS A DAY. BRIGHTNESS IS CONTRIBUTIONS.", 8, DIM, "400", "1.5"))
+
+    p.append("</svg>")
+    save("signal.svg", "".join(p))
+
+
+# ---------------------------------------------------------------- pulse
+def pulse():
+    W, H = 900, 190
+    bar_w = 840 / N
+    p = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
+        f'width="{W}" height="{H}" role="img" aria-label="Daily contribution signal">'
+    ]
+    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
+    for y in (70, 105, 140):
+        p.append(f'<line x1="30" y1="{y}" x2="870" y2="{y}" stroke="#FFFFFF" stroke-opacity=".035" stroke-width="1"/>')
+
+    p.append(txt(30, 28, "DAILY SIGNAL", 12, RED, "700", "3"))
+    p.append(txt(30, 45, f"{N} DAYS  ·  {TOTAL} CONTRIBUTIONS  ·  PEAK {PEAK}", 9, ASH, "400", "1.5"))
+
+    for i, count in enumerate(COUNTS):
+        x = 30 + i * bar_w
+        height = 2 + (count / PEAK) * 68
+        y = 140 - height
+        fill, opacity = color_for(count)
+        p.append(
+            f'<rect x="{x:.2f}" y="{y:.1f}" width="{bar_w - 0.45:.2f}" '
+            f'height="{height:.1f}" fill="{fill}" opacity="{opacity}"/>'
+        )
+
+    tops = " ".join(
+        f"{30 + i * bar_w + bar_w / 2:.1f},{140 - (2 + (count / PEAK) * 68):.1f}"
+        for i, count in enumerate(COUNTS)
+    )
+    p.append(f'<polyline points="{tops}" fill="none" stroke="{RED}" stroke-opacity=".22" stroke-width=".8"/>')
+
+    seen = set()
+    for i, day in enumerate(DAYS):
+        key = day["date"][:7]
+        if key in seen:
+            continue
+        seen.add(key)
+        if i > N - 20:
+            continue
+        month = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+                 "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"][int(day["date"][5:7]) - 1]
+        p.append(txt(30 + i * bar_w, 162, month, 7.5, DIM, "400", "1", "middle"))
+
+    peak_i = max(range(N), key=lambda i: COUNTS[i])
+    peak_x = 30 + peak_i * bar_w + bar_w / 2
+    peak_y = 140 - (2 + (COUNTS[peak_i] / PEAK) * 68)
+    p.append(f'<circle cx="{peak_x:.1f}" cy="{peak_y:.1f}" r="2.6" fill="{HOT}"/>')
+    p.append(txt(peak_x, peak_y - 8, str(PEAK), 8, HOT, "700", "0", "middle"))
+
+    p.append(f'<circle cx="869" cy="140" r="3" fill="{HOT}"/>')
+    p.append(txt(869, 162, "NOW", 7.5, HOT, "700", "1", "end"))
+
+    p.append(
+        f'<g><rect x="0" y="55" width="2" height="90" fill="{RED}" opacity=".28"/>'
+        f'<rect x="-6" y="55" width="14" height="90" fill="{RED}" opacity=".05"/>'
+        f'<animateTransform attributeName="transform" type="translate" '
+        f'from="30 0" to="870 0" dur="7s" repeatCount="indefinite"/></g>'
     )
     p.append("</svg>")
-    save("boot.svg", "".join(p))
+    save("pulse.svg", "".join(p))
 
 
-# ---------------------------------------------------------------- STACK LAYERS
-def layers():
-    W, X0, BH, GAP, TOP = 900, 70, 54, 12, 56
-    H = TOP + len(LAYERS) * (BH + GAP) + 10
-    PX = 30
-    DUR = 6
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="stack by layer">']
-    p.append(f'<rect width="{W}" height="{H}" rx="10" fill="{BG}" stroke="#2A0B0D"/>')
-    p.append(f'<text x="30" y="32" font-family="{FONT}" font-size="13" letter-spacing="2" fill="{RED}">// THE STACK \u2014 LAYER BY LAYER</text>')
-    y0, y1 = TOP - 8, H - 14
-    p.append(f'<line x1="{PX}" y1="{y0}" x2="{PX}" y2="{y1}" stroke="{GRAY}" stroke-opacity=".5" stroke-dasharray="3 5"/>')
-    for i, (tag, label, chips) in enumerate(LAYERS):
-        y = TOP + i * (BH + GAP)
-        cy = y + BH / 2
-        f = (cy - y0) / (y1 - y0)
-        k0, k1, k2 = max(f - 0.07, 0.001), f, min(f + 0.09, 0.999)
-        p.append(
-            f'<rect x="{X0}" y="{y}" width="{W - X0 - 30}" height="{BH}" rx="8" fill="#101012" stroke="{RED}" stroke-opacity=".25">'
-            f'<animate attributeName="stroke-opacity" values=".25;.25;1;.25;.25" keyTimes="0;{k0:.3f};{k1:.3f};{k2:.3f};1" dur="{DUR}s" repeatCount="indefinite"/></rect>'
-        )
-        p.append(f'<text x="{X0 + 16}" y="{cy - 3:.0f}" font-family="{FONT}" font-size="13" font-weight="700" fill="{RED}">{tag}</text>')
-        p.append(f'<text x="{X0 + 16}" y="{cy + 14:.0f}" font-family="{FONT}" font-size="11" letter-spacing="1" fill="{GRAY}">{esc(label)}</text>')
-        x = X0 + 200
-        for c in chips:
-            w = int(len(c) * 8.6 + 22)
-            p.append(
-                f'<rect x="{x}" y="{cy - 14:.0f}" width="{w}" height="28" rx="6" fill="#18181B" stroke="#2C2C31"/>'
-                f'<text x="{x + w / 2:.0f}" y="{cy + 5:.0f}" text-anchor="middle" font-family="{FONT}" font-size="13" fill="{WHITE}">{esc(c)}</text>'
-            )
-            x += w + 10
+# ---------------------------------------------------------------- spectrum
+def spectrum():
+    W, H = 900, 250
+    languages = REPOS["languages"]
+    total = sum(languages.values())
+    items = sorted(languages.items(), key=lambda kv: kv[1], reverse=True)
+    top = items[:6]
+    other = sum(v for _, v in items[6:])
+    if other:
+        top.append(("other", other))
+    colors = [RED, "#FF4A55", EMBER, "#C81E2E", "#8A1620", "#5A1018", "#3A3A40"]
+
+    p = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
+        f'width="{W}" height="{H}" role="img" aria-label="Language spectrum by bytes">'
+    ]
+    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
+    p.append(txt(30, 30, "LANGUAGE SPECTRUM", 12, RED, "700", "3"))
+    p.append(txt(30, 47, f"BY BYTES ACROSS {len(REPOS['repos'])} PUBLIC REPOSITORIES", 9, ASH, "400", "1.5"))
     p.append(
-        f'<circle r="6" fill="{RED}"><animateMotion dur="{DUR}s" repeatCount="indefinite" path="M{PX} {y0} V{y1}"/></circle>'
-        f'<circle r="6" fill="none" stroke="{RED}"><animateMotion dur="{DUR}s" repeatCount="indefinite" path="M{PX} {y0} V{y1}"/>'
-        f'<animate attributeName="r" values="6;16" dur="0.9s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values=".9;0" dur="0.9s" repeatCount="indefinite"/></circle>'
+        f'<defs><clipPath id="barclip"><rect x="30" y="80" width="840" height="34">'
+        f'<animate attributeName="width" from="0" to="840" dur="1.6s" fill="freeze"/>'
+        f'</rect></clipPath></defs>'
     )
+    p.append('<g clip-path="url(#barclip)">')
+    x = 30
+    for i, (name, value) in enumerate(top):
+        width = 840 * value / total
+        p.append(
+            f'<rect x="{x:.2f}" y="80" width="{width:.2f}" height="34" '
+            f'fill="{colors[i]}" stroke="{BG}" stroke-width="1"/>'
+        )
+        if width > 70:
+            p.append(txt(x + 10, 102, name.upper(), 9, BONE, "700", "1.5"))
+            p.append(txt(x + width - 10, 102, f"{value / total * 100:.1f}%", 9, BONE, "400", "1", "end"))
+        x += width
+    p.append("</g>")
+
+    for i, (name, value) in enumerate(top):
+        col, row = i % 4, i // 4
+        lx = 30 + col * 210
+        ly = 155 + row * 34
+        p.append(f'<rect x="{lx}" y="{ly - 8}" width="8" height="8" fill="{colors[i]}"/>')
+        p.append(txt(lx + 16, ly, name.upper(), 9, BONE, "700", "1"))
+        p.append(txt(lx + 16, ly + 13, f"{value / total * 100:.1f}%  ·  {value:,} bytes", 8, ASH, "400", ".5"))
+
+    p.append(txt(870, 44, f"TOTAL {total / 1_000_000:.2f} MB", 9, ASH, "400", "1.5", "end"))
+    p.append("</svg>")
+    save("spectrum.svg", "".join(p))
+
+
+# ---------------------------------------------------------------- layers
+def layers():
+    rows = [
+        ("L7", "APPLICATION", ["react", "next.js", "django", "vite"]),
+        ("L6", "LANGUAGES", ["typescript", "javascript", "python", "java", "c++"]),
+        ("L5", "DATA", ["mongodb", "postgresql", "sqlite"]),
+        ("L4", "RUNTIME", ["node.js", "express", "vercel"]),
+        ("L3", "SYSTEM", ["linux", "git", "github", "vscode"]),
+    ]
+    W = 900
+    row_h, gap, top = 56, 12, 84
+    H = top + len(rows) * (row_h + gap) + 40
+    p = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
+        f'width="{W}" height="{H}" role="img" aria-label="The stack, layer by layer">'
+    ]
+    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
+    grid = []
+    for x in range(0, W + 1, 36):
+        grid.append(f'<line x1="{x}" y1="0" x2="{x}" y2="{H}"/>')
+    for y in range(0, H + 1, 36):
+        grid.append(f'<line x1="0" y1="{y}" x2="{W}" y2="{y}"/>')
+    p.append(f'<g stroke="#FFFFFF" stroke-opacity=".02" stroke-width="1">{"".join(grid)}</g>')
+
+    p.append(txt(30, 32, "INSTRUMENTS / LAYER BY LAYER", 12, RED, "700", "2"))
+    p.append(txt(30, 49, "THE STACK, FROM APPLICATION TO SYSTEM", 9, ASH, "400", "1.5"))
+
+    axis_x = 24
+    p.append(f'<line x1="{axis_x}" y1="{top - 6}" x2="{axis_x}" y2="{H - 42}" stroke="{LINE}" stroke-dasharray="2 5"/>')
+
+    for i, (tag, label, chips) in enumerate(rows):
+        y = top + i * (row_h + gap)
+        p.append(f'<rect x="42" y="{y}" width="828" height="{row_h}" rx="6" fill="{INK}" stroke="{LINE}"/>')
+        p.append(txt(60, y + 23, tag, 14, RED, "800", "1"))
+        p.append(txt(60, y + 40, label, 8, ASH, "400", "1.5"))
+        x = 150
+        for chip in chips:
+            width = len(chip) * 7.2 + 22
+            p.append(f'<rect x="{x:.1f}" y="{y + 14}" width="{width:.1f}" height="28" rx="4" fill="#151519" stroke="{FAINT}"/>')
+            p.append(txt(x + width / 2, y + 33, chip, 11, BONE, "400", "0", "middle"))
+            x += width + 8
+        p.append(txt(856, y + 33, f"0{i + 1}", 8, DIM, "400", "1", "end"))
+
+    p.append(
+        f'<circle cx="{axis_x}" cy="{top}" r="3.5" fill="{RED}">'
+        f'<animate attributeName="cy" values="{top};{H - 46};{top}" dur="6s" repeatCount="indefinite"/>'
+        f'</circle>'
+    )
+    p.append(
+        f'<circle cx="{axis_x}" cy="{top}" r="3.5" fill="none" stroke="{RED}">'
+        f'<animate attributeName="cy" values="{top};{H - 46};{top}" dur="6s" repeatCount="indefinite"/>'
+        f'<animate attributeName="r" values="3.5;12" dur=".9s" repeatCount="indefinite"/>'
+        f'<animate attributeName="stroke-opacity" values=".8;0" dur=".9s" repeatCount="indefinite"/>'
+        f'</circle>'
+    )
+    p.append(txt(450, H - 14, "I DON'T COLLECT TOOLS. I USE THEM TO ANSWER QUESTIONS.", 9, ASH, "400", "2", "middle"))
     p.append("</svg>")
     save("layers.svg", "".join(p))
 
 
-# ---------------------------------------------------------------- DIVIDER
+# ---------------------------------------------------------------- divider
 def divider():
-    W, H = 900, 20
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="presentation">']
+    W, H = 900, 28
+    p = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
+        f'width="{W}" height="{H}" role="presentation">'
+    ]
     p.append(
-        f'<defs><linearGradient id="p"><stop offset="0" stop-color="{RED}" stop-opacity="0"/><stop offset=".5" stop-color="{RED}"/><stop offset="1" stop-color="{RED}" stop-opacity="0"/></linearGradient></defs>'
+        f'<defs><linearGradient id="dgrad" x1="0" x2="1">'
+        f'<stop offset="0" stop-color="{RED}" stop-opacity="0"/>'
+        f'<stop offset=".5" stop-color="{RED}"/>'
+        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></linearGradient></defs>'
     )
-    p.append(f'<line x1="0" y1="10" x2="{W}" y2="10" stroke="#2A2A2E"/>')
-    for x in range(30, W, 90):
-        p.append(f'<rect x="{x - 3}" y="7" width="6" height="6" fill="{BG}" stroke="#3A3A40"/>')
+    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
+    p.append(f'<line x1="0" y1="14" x2="{W}" y2="14" stroke="{LINE}" stroke-width="1"/>')
+    for x in range(30, W, 60):
+        p.append(f'<line x1="{x}" y1="11" x2="{x}" y2="17" stroke="{FAINT}" stroke-width="1"/>')
+    for i, x in enumerate((441, 450, 459)):
+        p.append(f'<rect x="{x}" y="12" width="3" height="3" fill="{RED}" opacity="{0.5 + i * 0.25}"/>')
     p.append(
-        f'<rect y="9" width="140" height="2" fill="url(#p)"><animate attributeName="x" from="-140" to="{W}" dur="3.5s" repeatCount="indefinite"/></rect></svg>'
+        f'<rect x="0" y="13" width="130" height="2" fill="url(#dgrad)">'
+        f'<animate attributeName="x" from="-130" to="{W}" dur="4.5s" repeatCount="indefinite"/>'
+        f'</rect>'
     )
+    p.append("</svg>")
     save("divider.svg", "".join(p))
 
 
-# ---------------------------------------------------------------- BIOS HEADER
-def bios_header():
-    """BIOS setup utility header: title bar + menu bar."""
-    W, H = 900, 108
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="ARCAENUX BIOS Setup Utility v{BIOS_VER}">']
-    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
-    p.append(f'<rect y="0" width="{W}" height="2" fill="{RED}"/>')
-    p.append(f'<rect y="{H - 2}" width="{W}" height="2" fill="{RED}"/>')
-    # Title
-    p.append(f'<text x="30" y="30" font-family="{FONT}" font-size="15" font-weight="700" letter-spacing="1" fill="{WHITE}">ARCAENUX BIOS SETUP UTILITY</text>')
-    p.append(f'<text x="30" y="48" font-family="{FONT}" font-size="10.5" fill="{GRAY}">(C) 2026 ARCAENUX  \u00b7  JOSEPH BOAFO AFFUL  \u00b7  KNUST, GHANA  \u00b7  v{BIOS_VER}</text>')
-    # Menu bar
-    my = 78
-    x = 30
-    for i, item in enumerate(BIOS_MENU):
-        active = (i == 0)
-        fill = RED if active else "#121216"
-        tcol = WHITE if active else GRAY
-        wdt = len(item) * 8.4 + 10
-        p.append(f'<rect x="{x}" y="{my - 13}" width="{wdt}" height="18" rx="2" fill="{fill}"/>')
-        p.append(f'<text x="{x + 6}" y="{my + 2}" font-family="{FONT}" font-size="12" font-weight="700" fill="{tcol}">{item}</text>')
-        x += wdt + 8
-    # Key hints
-    p.append(f'<text x="{W - 30}" y="{H - 8}" text-anchor="end" font-family="{FONT}" font-size="10" fill="#5A5A60">[\u2191\u2193] Navigate   [Enter] Select   [Esc] Exit   [F1] Help</text>')
-    p.append("</svg>")
-    save("bios-header.svg", "".join(p))
-
-
-# ---------------------------------------------------------------- BIOS KEYBAR
-def bios_keybar():
-    """Bottom BIOS key hint bar."""
-    W, H = 900, 26
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="presentation">']
-    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
-    p.append(f'<rect y="0" width="{W}" height="1" fill="#2A2A2E"/>')
-    p.append(f'<text x="30" y="18" font-family="{FONT}" font-size="10" fill="#5A5A60">[Tab] Switch panel   [Enter] Open   [Esc] Back   [F10] Save &amp; Exit</text>')
-    p.append(f'<text x="{W - 30}" y="18" text-anchor="end" font-family="{FONT}" font-size="10" fill="#5A5A60">ARCAENUX v{BIOS_VER}</text>')
-    p.append("</svg>")
-    save("bios-keybar.svg", "".join(p))
-
-
-# ---------------------------------------------------------------- CURSOR
-def cursor():
-    """Blinking block cursor."""
-    W, H = 16, 20
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="cursor">']
-    p.append(f'<rect width="{W}" height="{H}" fill="{RED}"><animate attributeName="opacity" values="1;0;1" keyTimes="0;.5;1" calcMode="discrete" dur="1s" repeatCount="indefinite"/></rect>')
-    p.append("</svg>")
-    save("cursor.svg", "".join(p))
-
-
-# ---------------------------------------------------------------- FOOTER
+# ---------------------------------------------------------------- footer
 def footer():
-    W, H = 900, 150
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="ARCAENUX footer">']
-    p.append(f'''<defs>
-<pattern id="fgrid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="{DIM}" stroke-width="1"/></pattern>
-<radialGradient id="fglow" cx="50%" cy="115%" r="70%"><stop offset="0" stop-color="{RED}" stop-opacity=".30"/><stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>
-<linearGradient id="fline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{RED}" stop-opacity="0"/><stop offset=".5" stop-color="{RED}"/><stop offset="1" stop-color="{RED}" stop-opacity="0"/></linearGradient>
-</defs>''')
-    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/><rect width="{W}" height="{H}" fill="url(#fgrid)" opacity=".55"/><rect width="{W}" height="{H}" fill="url(#fglow)"/>')
-    p.append(f'<rect y="0" width="{W}" height="1" fill="url(#fline)"/>')
-    p.append(f'<text x="{W / 2}" y="64" text-anchor="middle" font-family="{FONT}" font-size="27" font-weight="700" letter-spacing="5" fill="{WHITE}">THINK BEYOND THE OBVIOUS.</text>')
-    p.append(f'<text x="{W / 2}" y="94" text-anchor="middle" font-family="{FONT}" font-size="12" letter-spacing="4" fill="{GRAY}">LEARN IT  \u00b7  BUILD IT  \u00b7  UNDERSTAND IT</text>')
+    W, H = 900, 200
+    p = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
+        f'width="{W}" height="{H}" role="img" aria-label="The signal continues">'
+    ]
     p.append(
-        f'<text x="{W / 2}" y="126" text-anchor="middle" font-family="{FONT}" font-size="10" letter-spacing="3" fill="#5A5A60">\u00a9 2026 ARCAENUX'
-        f'<tspan fill="{RED}">_<animate attributeName="opacity" values="1;0" keyTimes="0;.5" calcMode="discrete" dur="1.1s" repeatCount="indefinite"/></tspan></text>'
+        f'<defs>'
+        f'<linearGradient id="fgrad" x1="0" x2="1">'
+        f'<stop offset="0" stop-color="{RED}" stop-opacity="0"/>'
+        f'<stop offset=".5" stop-color="{RED}"/>'
+        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></linearGradient>'
+        f'<radialGradient id="fglow" cx="50%" cy="120%" r="70%">'
+        f'<stop offset="0" stop-color="{RED}" stop-opacity=".14"/>'
+        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
+        f'</defs>'
+    )
+    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/>')
+    p.append(f'<rect width="{W}" height="{H}" fill="url(#fglow)"/>')
+    p.append(f'<rect y="0" width="{W}" height="1" fill="url(#fgrad)"/>')
+
+    for bx, by in ((90, 100), (810, 100)):
+        for i in range(40):
+            angle = i * math.radians(137.5)
+            rr = 4 + 26 * math.sqrt(i / 39)
+            p.append(
+                f'<circle cx="{bx + rr * math.cos(angle):.1f}" cy="{by + rr * math.sin(angle):.1f}" '
+                f'r="{0.8 + (i % 4) * 0.4:.1f}" fill="{RED}" opacity=".35"/>'
+            )
+
+    p.append(
+        f'<text x="{W / 2}" y="86" text-anchor="middle" font-family="{SERIF}" '
+        f'font-size="36" fill="{BONE}">THE SIGNAL CONTINUES'
+        f'<tspan fill="{RED}"><animate attributeName="opacity" values="1;0;1" '
+        f'keyTimes="0;.5;1" calcMode="discrete" dur="1s" repeatCount="indefinite"/>.</tspan></text>'
+    )
+    p.append(txt(W / 2, 120, "LEARN  ·  BUILD  ·  BREAK  ·  REBUILD", 11, ASH, "400", "4", "middle"))
+    p.append(
+        txt(
+            W / 2,
+            168,
+            f"{NAME} / {datetime.date.today().year} / BUILT WITH CURIOSITY AND A LITTLE BIT OF OBSESSION",
+            8,
+            DIM,
+            "400",
+            "2",
+            "middle",
+        )
     )
     p.append("</svg>")
     save("footer.svg", "".join(p))
 
 
 if __name__ == "__main__":
-    hero()
-    boot()
+    signal()
+    pulse()
+    spectrum()
     layers()
     divider()
-    bios_header()
-    bios_keybar()
-    cursor()
     footer()

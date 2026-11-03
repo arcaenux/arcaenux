@@ -1,0 +1,271 @@
+{
+  "repos": [
+    {
+      "name": "arcaenux",
+      "description": "",
+      "stars": 0,
+      "language": "Python",
+      "pushed": "2026-11-03T06:24:56Z",
+      "url": "https://github.com/arcaenux/arcaenux",
+      "topics": []
+    },
+    {
+      "name": "SaveDat",
+      "description": "",
+      "stars": 0,
+      "language": "Java",
+      "pushed": "2026-11-03T00:20:40Z",
+      "url": "https://github.com/arcaenux/SaveDat",
+      "topics": []
+    },
+    {
+      "name": "Axellemd_projects",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-10-24T11:12:38Z",
+      "url": "https://github.com/arcaenux/Axellemd_projects",
+      "topics": []
+    },
+    {
+      "name": "mindstep",
+      "description": "",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed": "2026-10-22T01:55:41Z",
+      "url": "https://github.com/arcaenux/mindstep",
+      "topics": []
+    },
+    {
+      "name": "RepoClue",
+      "description": "Discover, evaluate, and organize public GitHub repositories from the command line.",
+      "stars": 0,
+      "language": "Python",
+      "pushed": "2026-10-22T00:37:33Z",
+      "url": "https://github.com/arcaenux/RepoClue",
+      "topics": []
+    },
+    {
+      "name": "zaptek_internship",
+      "description": "",
+      "stars": 0,
+      "language": "Python",
+      "pushed": "2026-09-19T19:22:01Z",
+      "url": "https://github.com/arcaenux/zaptek_internship",
+      "topics": []
+    },
+    {
+      "name": "invogen",
+      "description": "",
+      "stars": 0,
+      "language": "HTML",
+      "pushed": "2026-09-07T22:51:09Z",
+      "url": "https://github.com/arcaenux/invogen",
+      "topics": []
+    },
+    {
+      "name": "course-rundown",
+      "description": "",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed": "2026-08-29T22:22:30Z",
+      "url": "https://github.com/arcaenux/course-rundown",
+      "topics": []
+    },
+    {
+      "name": "django-fundamentals",
+      "description": "",
+      "stars": 0,
+      "language": "Python",
+      "pushed": "2026-07-27T17:57:21Z",
+      "url": "https://github.com/arcaenux/django-fundamentals",
+      "topics": []
+    },
+    {
+      "name": "skills-introduction-to-github",
+      "description": "My clone repository",
+      "stars": 0,
+      "language": "",
+      "pushed": "2026-05-29T23:14:50Z",
+      "url": "https://github.com/arcaenux/skills-introduction-to-github",
+      "topics": []
+    },
+    {
+      "name": "promptopia",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-05-15T00:20:21Z",
+      "url": "https://github.com/arcaenux/promptopia",
+      "topics": []
+    },
+    {
+      "name": "codealpha_banking_system",
+      "description": "CodeAlpha internship task 3: banking_system",
+      "stars": 0,
+      "language": "C++",
+      "pushed": "2026-05-14T21:41:41Z",
+      "url": "https://github.com/arcaenux/codealpha_banking_system",
+      "topics": []
+    },
+    {
+      "name": "codealpha_login_system",
+      "description": "CodeAlpha internship Second task: Login system",
+      "stars": 0,
+      "language": "C++",
+      "pushed": "2026-05-13T23:59:28Z",
+      "url": "https://github.com/arcaenux/codealpha_login_system",
+      "topics": []
+    },
+    {
+      "name": "codealpha_cgpa_calculator",
+      "description": "Task 1 of my C++ internship at CodeAlpha -> CGPA_Calculator",
+      "stars": 0,
+      "language": "C++",
+      "pushed": "2026-05-10T14:41:03Z",
+      "url": "https://github.com/arcaenux/codealpha_cgpa_calculator",
+      "topics": []
+    },
+    {
+      "name": "hbci_v1",
+      "description": "Church landing page ",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-05-01T21:17:29Z",
+      "url": "https://github.com/arcaenux/hbci_v1",
+      "topics": []
+    },
+    {
+      "name": "mern-auth",
+      "description": "A demo project emphasizing backend authentication.",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-04-29T11:56:08Z",
+      "url": "https://github.com/arcaenux/mern-auth",
+      "topics": []
+    },
+    {
+      "name": "Mern-auth-2",
+      "description": "A demo of advanced mern stack authentication app.",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-04-29T11:48:07Z",
+      "url": "https://github.com/arcaenux/Mern-auth-2",
+      "topics": []
+    },
+    {
+      "name": "mern-chat",
+      "description": "A demo realtime chat app with socket.io , react and nodejs",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-04-29T11:45:01Z",
+      "url": "https://github.com/arcaenux/mern-chat",
+      "topics": []
+    },
+    {
+      "name": "qr_scanner",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-04-24T13:48:55Z",
+      "url": "https://github.com/arcaenux/qr_scanner",
+      "topics": []
+    },
+    {
+      "name": "hbci_php",
+      "description": "",
+      "stars": 0,
+      "language": "CSS",
+      "pushed": "2026-04-12T15:06:32Z",
+      "url": "https://github.com/arcaenux/hbci_php",
+      "topics": []
+    },
+    {
+      "name": "cpp-practice",
+      "description": "",
+      "stars": 0,
+      "language": "C++",
+      "pushed": "2026-03-23T05:09:21Z",
+      "url": "https://github.com/arcaenux/cpp-practice",
+      "topics": []
+    },
+    {
+      "name": "randomquotes",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-02-20T14:45:58Z",
+      "url": "https://github.com/arcaenux/randomquotes",
+      "topics": []
+    },
+    {
+      "name": "kortex",
+      "description": "A demo landing page of a real-estate website",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-02-20T14:43:17Z",
+      "url": "https://github.com/arcaenux/kortex",
+      "topics": []
+    },
+    {
+      "name": "calculator",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-02-20T14:42:37Z",
+      "url": "https://github.com/arcaenux/calculator",
+      "topics": []
+    },
+    {
+      "name": "ai-resume-analyzer",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-02-20T14:42:03Z",
+      "url": "https://github.com/arcaenux/ai-resume-analyzer",
+      "topics": []
+    },
+    {
+      "name": "shopper",
+      "description": "A demo of an online store with React, Mongodb and Nodejs",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed": "2026-02-20T13:51:37Z",
+      "url": "https://github.com/arcaenux/shopper",
+      "topics": []
+    },
+    {
+      "name": "portfolio1",
+      "description": "",
+      "stars": 0,
+      "language": "HTML",
+      "pushed": "2026-02-20T13:50:48Z",
+      "url": "https://github.com/arcaenux/portfolio1",
+      "topics": []
+    },
+    {
+      "name": "Octo",
+      "description": "A demo IT solutions website. Basically, a landing page",
+      "stars": 0,
+      "language": "CSS",
+      "pushed": "2026-02-20T13:50:00Z",
+      "url": "https://github.com/arcaenux/Octo",
+      "topics": []
+    }
+  ],
+  "languages": {
+    "Python": 105794,
+    "Java": 7118,
+    "JavaScript": 1412193,
+    "HTML": 188754,
+    "CSS": 100596,
+    "TypeScript": 3926754,
+    "Dockerfile": 2423,
+    "Shell": 190,
+    "C++": 59941,
+    "PHP": 7969,
+    "C": 27620,
+    "CMake": 12638,
+    "SCSS": 558
+  }
+}
