@@ -6,29 +6,32 @@ import os
 import random
 
 # ---------------- CONFIG ----------------
-NAME = "AXONCRON"
-SUB = "SOFTWARE  \u2022  SYSTEMS  \u2022  AI  \u2022  INFRASTRUCTURE"
-PROMPT = "> signal detected"
+NAME = "ARCAENUX"
+SUB = "COMPUTER SCIENCE  \u2022  SOFTWARE  \u2022  SYSTEMS  \u2022  AI"
+PROMPT = "> think deep. build bold. understand more."
+HOST = "joseph@arcaenux: ~"
 BOOT = [  # (kind, text)  kind: cmd | out | ok
     ("cmd", "whoami"),
-    ("out", "axoncron  //  github.com/astrolabscig"),
+    ("out", "joseph boafo afful  //  arcaenux"),
+    ("cmd", "cat education.txt"),
+    ("out", "bsc computer science @ knust  \u00b7  ghana"),
     ("cmd", "cat focus.txt"),
-    ("out", "software \u00b7 systems \u00b7 ai \u00b7 networking \u00b7 security \u00b7 infrastructure"),
+    ("out", "software engineering \u00b7 algorithms \u00b7 ai \u00b7 backend systems"),
     ("cmd", "./loop.sh"),
     ("out", "learn \u2192 build \u2192 break \u2192 investigate \u2192 rebuild"),
     ("cmd", "status"),
-    ("ok", "curiosity engine online"),
+    ("ok", "building in public"),
 ]
 LAYERS = [  # (tag, label, chips)
-    ("L7", "APPLICATION", ["react", "next.js", "django", "spring"]),
-    ("L6", "LANGUAGES", ["java", "python", "c++", "typescript", "bash"]),
-    ("L5", "DATA", ["postgres", "mongodb", "redis"]),
-    ("L4", "RUNTIME / INFRA", ["node.js", "docker", "nginx", "cloudflare"]),
+    ("L7", "APPLICATION", ["react", "next.js", "django", "vite"]),
+    ("L6", "LANGUAGES", ["java", "python", "c++", "typescript", "javascript"]),
+    ("L5", "DATA", ["mongodb", "postgresql", "sqlite"]),
+    ("L4", "RUNTIME / INFRA", ["node.js", "express", "vercel"]),
     ("L3", "OS & TOOLING", ["linux", "git", "github", "vscode"]),
 ]
 # ----------------------------------------
 
-BG, RED, GRAY, DIM, OK, WHITE = "#0B0B0C", "#E5484D", "#8A8A8E", "#1B1B1E", "#3DD68C", "#FFFFFF"
+BG, RED, GRAY, DIM, OK, WHITE = "#0B0B0C", "#FF2438", "#8A8A8E", "#1B1B1E", "#3DD68C", "#FFFFFF"
 FONT = "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 HEAD = '<?xml version="1.0" encoding="UTF-8"?>\n'
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
@@ -117,7 +120,7 @@ def boot():
     p.append(f'<rect width="{W}" height="36" rx="10" fill="#141416"/><rect y="26" width="{W}" height="10" fill="#141416"/>')
     for i, c in enumerate([RED, "#F5A524", OK]):
         p.append(f'<circle cx="{24 + i * 20}" cy="18" r="6" fill="{c}"/>')
-    p.append(f'<text x="{W // 2}" y="23" text-anchor="middle" font-family="{FONT}" font-size="13" fill="{GRAY}">axoncron@lab: ~</text>')
+    p.append(f'<text x="{W // 2}" y="23" text-anchor="middle" font-family="{FONT}" font-size="13" fill="{GRAY}">{HOST}</text>')
 
     clips, lines = [], []
     s = 0.6
@@ -216,8 +219,30 @@ def divider():
     save("divider.svg", "".join(p))
 
 
+# ---------------------------------------------------------------- FOOTER
+def footer():
+    W, H = 900, 150
+    p = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="ARCAENUX footer">']
+    p.append(f'''<defs>
+<pattern id="fgrid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="{DIM}" stroke-width="1"/></pattern>
+<radialGradient id="fglow" cx="50%" cy="115%" r="70%"><stop offset="0" stop-color="{RED}" stop-opacity=".30"/><stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>
+<linearGradient id="fline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{RED}" stop-opacity="0"/><stop offset=".5" stop-color="{RED}"/><stop offset="1" stop-color="{RED}" stop-opacity="0"/></linearGradient>
+</defs>''')
+    p.append(f'<rect width="{W}" height="{H}" fill="{BG}"/><rect width="{W}" height="{H}" fill="url(#fgrid)" opacity=".55"/><rect width="{W}" height="{H}" fill="url(#fglow)"/>')
+    p.append(f'<rect y="0" width="{W}" height="1" fill="url(#fline)"/>')
+    p.append(f'<text x="{W / 2}" y="64" text-anchor="middle" font-family="{FONT}" font-size="27" font-weight="700" letter-spacing="5" fill="{WHITE}">THINK BEYOND THE OBVIOUS.</text>')
+    p.append(f'<text x="{W / 2}" y="94" text-anchor="middle" font-family="{FONT}" font-size="12" letter-spacing="4" fill="{GRAY}">LEARN IT  \u00b7  BUILD IT  \u00b7  UNDERSTAND IT</text>')
+    p.append(
+        f'<text x="{W / 2}" y="126" text-anchor="middle" font-family="{FONT}" font-size="10" letter-spacing="3" fill="#5A5A60">\u00a9 2026 ARCAENUX'
+        f'<tspan fill="{RED}">_<animate attributeName="opacity" values="1;0" keyTimes="0;.5" calcMode="discrete" dur="1.1s" repeatCount="indefinite"/></tspan></text>'
+    )
+    p.append("</svg>")
+    save("footer.svg", "".join(p))
+
+
 if __name__ == "__main__":
     hero()
     boot()
     layers()
     divider()
+    footer()
